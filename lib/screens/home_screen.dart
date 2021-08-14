@@ -10,10 +10,14 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   int counter = 0;
+  FocusNode focusNode = FocusNode();
+
   @override
   Widget build(BuildContext context) {
     return Column(
-      children: [HomeCarousel()],
+      children: [
+        HomeCarousel(),
+      ],
     );
   }
 }

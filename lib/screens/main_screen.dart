@@ -1,12 +1,12 @@
-import 'package:ecommerce_flutter/components/search.dart';
-import 'package:ecommerce_flutter/screens/account_screen.dart';
+import 'package:ecommerce_flutter/screens/components/search.dart';
+import 'package:ecommerce_flutter/providers/PersistentTabProvider.dart';
+import 'package:ecommerce_flutter/screens/account/account_screen.dart';
 import 'package:ecommerce_flutter/screens/cart_screen.dart';
 import 'package:ecommerce_flutter/screens/category_screen.dart';
 import 'package:ecommerce_flutter/screens/home_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:persistent_bottom_nav_bar/persistent-tab-view.dart';
-
-PersistentTabController _controller = PersistentTabController(initialIndex: 0);
+import 'package:provider/provider.dart';
 
 class MainScreen extends StatefulWidget {
   @override
@@ -54,6 +54,8 @@ class _MainScreenState extends State<MainScreen> {
 
   @override
   Widget build(BuildContext context) {
+    PersistentTabController _controller =
+        Provider.of<PersistentTabProvider>(context).controller;
     return Scaffold(
       appBar: AppBar(
         title: Center(
@@ -81,14 +83,15 @@ class _MainScreenState extends State<MainScreen> {
         elevation: 10,
         backgroundColor: Colors.white,
       ),
-      body: buildPersistentTabView(context),
+      body: buildPersistentTabView(context, _controller),
     );
   }
 
-  PersistentTabView buildPersistentTabView(BuildContext context) {
+  PersistentTabView buildPersistentTabView(
+      BuildContext context, PersistentTabController controller) {
     return PersistentTabView(
       context,
-      controller: _controller,
+      controller: controller,
       screens: screens,
       items: _navbarItems(),
       confineInSafeArea: true,

@@ -1,4 +1,4 @@
-import 'package:ecommerce_flutter/components/home_carousel.dart';
+import 'package:ecommerce_flutter/screens/components/home_carousel.dart';
 import 'package:flutter/material.dart';
 
 class HomeScreen extends StatefulWidget {

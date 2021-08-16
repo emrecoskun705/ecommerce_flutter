@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:ecommerce_flutter/constants.dart';
-import 'package:ecommerce_flutter/components/rounded_button.dart';
+import 'package:ecommerce_flutter/screens/components/rounded_button.dart';
 
 class RegisterScreen extends StatelessWidget {
   @override

@@ -1,10 +1,9 @@
-import 'package:ecommerce_flutter/components/rounded_button.dart';
-import 'package:ecommerce_flutter/constants.dart';
-import 'package:ecommerce_flutter/screens/login_screen.dart';
-import 'package:ecommerce_flutter/screens/register_screen.dart';
+import 'package:ecommerce_flutter/screens/components/rounded_button.dart';
 import 'package:flutter/material.dart';
+import 'login_screen.dart';
+import 'register_screen.dart';
 
-class AccountScreen extends StatelessWidget {
+class AuthenticationPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -44,7 +43,8 @@ class AccountScreen extends StatelessWidget {
                           isScrollControlled: true,
                           context: context,
                           builder: (context) {
-                            return LoginScreen();
+                            return FractionallySizedBox(
+                                heightFactor: 1, child: LoginScreen());
                           });
                     },
                   ),
@@ -56,7 +56,8 @@ class AccountScreen extends StatelessWidget {
                         isScrollControlled: true,
                         context: context,
                         builder: (context) {
-                          return RegisterScreen();
+                          return FractionallySizedBox(
+                              heightFactor: 1, child: RegisterScreen());
                         },
                       );
                     },

@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 const kServerAuthApiURL = 'http://192.168.0.108:8000/rest-auth';
-const kServerApiURL = 'http://127.0.0.1:8000/api';
+const kServerApiURL = 'http://192.168.0.108:8000/api';
 
 const kAccountInputDecoration = InputDecoration(
   hintStyle: TextStyle(

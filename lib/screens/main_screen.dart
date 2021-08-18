@@ -3,10 +3,12 @@ import 'package:ecommerce_flutter/providers/PersistentTabProvider.dart';
 import 'package:ecommerce_flutter/screens/account/account_screen.dart';
 import 'package:ecommerce_flutter/screens/cart_screen.dart';
 import 'package:ecommerce_flutter/screens/category_screen.dart';
-import 'package:ecommerce_flutter/screens/home_screen.dart';
+import 'package:ecommerce_flutter/screens/home/home_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:persistent_bottom_nav_bar/persistent-tab-view.dart';
 import 'package:provider/provider.dart';
+
+import '../size_config.dart';
 
 class MainScreen extends StatefulWidget {
   @override
@@ -54,6 +56,7 @@ class _MainScreenState extends State<MainScreen> {
 
   @override
   Widget build(BuildContext context) {
+    SizeConfig().init(context);
     PersistentTabController _controller =
         Provider.of<PersistentTabProvider>(context).controller;
     return Scaffold(

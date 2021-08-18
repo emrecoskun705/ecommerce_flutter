@@ -2,8 +2,8 @@ import 'package:ecommerce_flutter/providers/UserProvider.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import 'account_page.dart';
-import 'authentication_page.dart';
+import 'components/account_page.dart';
+import 'components/authentication_page.dart';
 
 //This is the screen which determines page for account screen
 // if user is logged in then it will show us account detail page

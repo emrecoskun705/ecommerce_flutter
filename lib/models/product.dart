@@ -8,13 +8,13 @@ class Product {
   int stock;
   bool isFavourite = false;
 
-  Product({
-    required this.id,
-    required this.title,
-    required this.description,
-    required this.images,
-    required this.price,
-    required this.discountPrice,
-    required this.stock,
-  });
+  Product(
+      {required this.id,
+      required this.title,
+      required this.description,
+      required this.images,
+      required this.price,
+      required this.discountPrice,
+      required this.stock,
+      required this.isFavourite});
 }

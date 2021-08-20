@@ -19,9 +19,9 @@ class FavouriteProductApi {
     var token = await UserTokenSecureStorage.getToken();
     var url = Uri.parse('$kServerApiURL/favourite-product-list/');
     url = url.replace(queryParameters: {'productId': productId.toString()});
-    http.Response response = await http
-        .get(url, headers: {HttpHeaders.authorizationHeader: token.toString()});
-    print(response);
+    http.Response response = await http.get(url, headers: {
+      HttpHeaders.authorizationHeader: 'Token ${token.toString()}'
+    });
     if (response.statusCode == 200) {
       return true;
     } else {

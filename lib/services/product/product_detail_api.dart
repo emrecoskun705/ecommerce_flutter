@@ -1,14 +1,12 @@
 import 'package:ecommerce_flutter/models/product.dart';
-import 'package:ecommerce_flutter/providers/UserProvider.dart';
+import 'package:ecommerce_flutter/services/product/favourite_product_api.dart';
 import 'package:http/http.dart' as http;
 import 'package:ecommerce_flutter/constants.dart';
 import 'dart:convert';
 
-import 'package:provider/provider.dart';
-
 class ProductDetailApi {
   // fetch one product which has id=productId
-  static Future<Product> fetchData(int productId) async {
+  Future<Product> fetchData(int productId) async {
     var url = Uri.parse('$kServerApiURL/product-detail/');
     url = url.replace(queryParameters: {'productId': productId.toString()});
     http.Response response = await http.get(url);
@@ -23,6 +21,16 @@ class ProductDetailApi {
         }
       }
 
+      // fetch favourite product response. If it is true, product is favourite otherwise not
+      dynamic responseFavouriteProduct =
+          await FavouriteProductApi().fetchFavouriteProduct(productId);
+      late bool isFavourite;
+      if (responseFavouriteProduct) {
+        isFavourite = true;
+      } else {
+        isFavourite = false;
+      }
+
       return Product(
         id: data['id'],
         title: data['title'],
@@ -32,6 +40,7 @@ class ProductDetailApi {
         discountPrice:
             data['discount_price'] == null ? 0.0 : data['discount_price'],
         stock: data['stock'],
+        isFavourite: isFavourite,
       );
     } else {
       throw Exception(['There is no product']);

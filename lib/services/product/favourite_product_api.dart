@@ -7,12 +7,26 @@ import 'package:http/http.dart' as http;
 enum FavouriteProductAction { add, remove }
 
 class FavouriteProductApi {
-  Future<dynamic> fetchData() async {
+  Future<dynamic> fetchFavouriteProductList() async {
     var token = await UserTokenSecureStorage.getToken();
     var url = Uri.parse('$kServerApiURL/favourite-product-list/');
     http.Response response = await http
         .get(url, headers: {HttpHeaders.authorizationHeader: token.toString()});
     return response;
+  }
+
+  Future<bool> fetchFavouriteProduct(int productId) async {
+    var token = await UserTokenSecureStorage.getToken();
+    var url = Uri.parse('$kServerApiURL/favourite-product-list/');
+    url = url.replace(queryParameters: {'productId': productId.toString()});
+    http.Response response = await http
+        .get(url, headers: {HttpHeaders.authorizationHeader: token.toString()});
+    print(response);
+    if (response.statusCode == 200) {
+      return true;
+    } else {
+      return false;
+    }
   }
 
   // action is either 'add' or 'remove'

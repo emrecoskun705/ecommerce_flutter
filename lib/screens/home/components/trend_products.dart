@@ -1,10 +1,6 @@
-import 'dart:convert';
-
-import 'package:ecommerce_flutter/models/product.dart';
-import 'package:ecommerce_flutter/providers/TrendProductProvider.dart';
+import 'package:ecommerce_flutter/providers/product/trend_product_provider.dart';
 import 'package:ecommerce_flutter/screens/components/product_card.dart';
 import 'package:ecommerce_flutter/screens/home/components/section_title.dart';
-import 'package:ecommerce_flutter/services/trend_product_api.dart';
 import 'package:ecommerce_flutter/size_config.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';

@@ -2,8 +2,9 @@ import 'package:ecommerce_flutter/providers/UserProvider.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-const kServerAuthApiURL = 'http://192.168.0.108:8000/rest-auth';
-const kServerApiURL = 'http://192.168.0.108:8000/api';
+const kServerURL = 'http://192.168.0.108:8000';
+const kServerAuthApiURL = '$kServerURL/rest-auth';
+const kServerApiURL = '$kServerURL/api';
 
 const kAccountInputDecoration = InputDecoration(
   hintStyle: TextStyle(

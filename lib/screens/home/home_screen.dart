@@ -1,8 +1,7 @@
-import 'package:ecommerce_flutter/models/product.dart';
-import 'package:ecommerce_flutter/screens/components/product_card.dart';
+import 'package:ecommerce_flutter/screens/components/search.dart';
 import 'package:ecommerce_flutter/screens/home/components/trend_products.dart';
 import 'package:flutter/material.dart';
-import 'package:getwidget/getwidget.dart';
+import 'package:getwidget/getwidget.dart' show GFCarousel;
 
 import '../../size_config.dart';
 
@@ -26,8 +25,34 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     var _spacer = SizedBox(height: getProportionateScreenHeight(20.0));
-    return SingleChildScrollView(
-      child: Column(
+    return Scaffold(
+      appBar: AppBar(
+        title: Center(
+          child: Text(
+            'Emre\'s E-Commerce',
+            style: TextStyle(
+              color: Color(0xFF8ECAE6),
+              fontWeight: FontWeight.bold,
+            ),
+          ),
+        ),
+        actions: [
+          IconButton(
+            padding: EdgeInsets.only(right: 10.0),
+            onPressed: () async {
+              showSearch(context: context, delegate: SearchBar());
+            },
+            icon: Icon(
+              Icons.search,
+              size: 40.0,
+              color: Colors.grey,
+            ),
+          ),
+        ],
+        elevation: 10,
+        backgroundColor: Colors.white,
+      ),
+      body: ListView(
         children: [
           _spacer,
           GFCarousel(

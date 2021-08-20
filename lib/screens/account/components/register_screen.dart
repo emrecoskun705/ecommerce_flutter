@@ -1,4 +1,4 @@
-import 'package:ecommerce_flutter/providers/PersistentTabProvider.dart';
+import 'package:ecommerce_flutter/providers/persistent_tab_provider.dart';
 import 'package:ecommerce_flutter/providers/UserProvider.dart';
 import 'package:flutter/material.dart';
 import 'package:ecommerce_flutter/constants.dart';

@@ -1,4 +1,6 @@
 import 'package:ecommerce_flutter/providers/product/search_product_provider.dart';
+import 'package:ecommerce_flutter/screens/components/product_card.dart';
+import 'package:ecommerce_flutter/size_config.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -31,14 +33,28 @@ class _ProductListPageState extends State<ProductListPage> {
 
   @override
   Widget build(BuildContext context) {
-    return _buildList();
+    var size = MediaQuery.of(context).size;
+
+    /*24 is for notification bar on Android*/
+    final double itemHeight = (size.height - kToolbarHeight - 24) / 2;
+    final double itemWidth = size.width / 2;
+    return Container(
+      padding: EdgeInsets.symmetric(horizontal: getProportionateScreenWidth(5)),
+      color: Colors.grey.withOpacity(0.1),
+      child: _buildList(itemHeight, itemWidth),
+    );
   }
 
-  Widget _buildList() {
+  Widget _buildList(itemHeight, itemWidth) {
     return ChangeNotifierProvider.value(
       value: searchProductProvider,
       child: Consumer<SearchProductProvider>(
-        builder: (context, data, index) => ListView.builder(
+        builder: (context, data, index) => GridView.builder(
+            gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                crossAxisCount: 2,
+                childAspectRatio: (itemWidth / itemHeight),
+                // mainAxisExtent: 250,
+                mainAxisSpacing: getProportionateScreenHeight(5)),
             controller: _sc,
             // purpose of itemCount + 1 is progress indicator.
             // progress indicator is always at the end but it only appears when isLoading=true
@@ -48,14 +64,7 @@ class _ProductListPageState extends State<ProductListPage> {
               if (index == data.productList.length) {
                 return _buildProgressIndicator();
               }
-              return ListTile(
-                leading: CircleAvatar(
-                  radius: 30.0,
-                  backgroundImage: NetworkImage(data.productList[index].image),
-                ),
-                title: Text(data.productList[index].title),
-                subtitle: Text(data.productList[index].price.toString()),
-              );
+              return ProductCard(product: data.productList[index]);
             }),
       ),
     );

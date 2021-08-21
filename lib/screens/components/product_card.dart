@@ -53,6 +53,7 @@ class _ProductCardState extends State<ProductCard> {
             }, // redirect to product detail page
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
                 AspectRatio(
                   aspectRatio: 1.02,
@@ -65,13 +66,12 @@ class _ProductCardState extends State<ProductCard> {
                       tag: widget.product.id.toString(),
                       child: Image.network(
                         widget.product.image,
-                        fit: BoxFit.fill,
                       ),
                     ),
                   ),
                 ),
                 SizedBox(
-                  height: 10.0,
+                  height: getProportionateScreenHeight(10),
                 ),
                 Text(
                   widget.product.title,

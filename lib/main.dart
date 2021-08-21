@@ -1,5 +1,6 @@
 import 'package:ecommerce_flutter/providers/persistent_tab_provider.dart';
 import 'package:ecommerce_flutter/providers/product/product_provider.dart';
+import 'package:ecommerce_flutter/providers/product/search_product_provider.dart';
 import 'package:ecommerce_flutter/providers/product/trend_product_provider.dart';
 import 'package:ecommerce_flutter/providers/UserProvider.dart';
 import 'package:flutter/material.dart';
@@ -13,7 +14,6 @@ void main() {
         ChangeNotifierProvider(create: (_) => UserProvider()),
         ChangeNotifierProvider(create: (_) => PersistentTabProvider()),
         ChangeNotifierProvider(create: (_) => TrendProductProvider()),
-        ChangeNotifierProvider(create: (_) => ProductProvider()),
       ],
       child: MyApp(),
     ),

@@ -5,7 +5,6 @@ class ProductProvider with ChangeNotifier {
   Product? product;
 
   ProductProvider();
-
   void setProduct(Product product) {
     this.product = product;
     notifyListeners();

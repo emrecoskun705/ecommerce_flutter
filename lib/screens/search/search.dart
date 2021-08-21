@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'components/product_list_result.dart';
 
 class SearchBar extends SearchDelegate<String?> {
   //TODO: delete after handle api
@@ -39,22 +40,12 @@ class SearchBar extends SearchDelegate<String?> {
     );
   }
 
+  // this part activates when user, search is completed
+  // and lists the products for given query
   @override
   Widget buildResults(BuildContext context) {
-    return Center(
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Text(
-            query,
-            style: TextStyle(
-              color: Colors.black,
-              fontWeight: FontWeight.bold,
-              fontSize: 64,
-            ),
-          )
-        ],
-      ),
+    return ProductListPage(
+      query: query,
     );
   }
 

@@ -1,4 +1,4 @@
-import 'package:ecommerce_flutter/screens/components/search.dart';
+import 'package:ecommerce_flutter/screens/search/search.dart';
 import 'package:ecommerce_flutter/screens/home/components/trend_products.dart';
 import 'package:flutter/material.dart';
 import 'package:getwidget/getwidget.dart' show GFCarousel;

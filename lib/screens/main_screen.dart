@@ -1,3 +1,4 @@
+import 'package:ecommerce_flutter/providers/UserProvider.dart';
 import 'package:ecommerce_flutter/providers/persistent_tab_provider.dart';
 import 'package:ecommerce_flutter/screens/account/account_screen.dart';
 import 'package:ecommerce_flutter/screens/cart_screen.dart';

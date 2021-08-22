@@ -95,6 +95,11 @@ class UserProvider with ChangeNotifier {
     }
   }
 
+  Future checkIsLoggedIn() async {
+    var val = await UserTokenSecureStorage.checkLoggedIn();
+    setIsLoggedIn(val);
+  }
+
   // setter and getter part for fields
 
   bool get isLoggedIn => _isLoggedIn;

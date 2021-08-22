@@ -1,7 +1,9 @@
+import 'package:ecommerce_flutter/providers/UserProvider.dart';
 import 'package:ecommerce_flutter/screens/search/search.dart';
 import 'package:ecommerce_flutter/screens/home/components/trend_products.dart';
 import 'package:flutter/material.dart';
 import 'package:getwidget/getwidget.dart' show GFCarousel;
+import 'package:provider/provider.dart';
 
 import '../../size_config.dart';
 
@@ -22,6 +24,14 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
+  @override
+  void didChangeDependencies() {
+    // TODO: implement didChangeDependencies
+    super.didChangeDependencies();
+    // check if user is logged in or not
+    Provider.of<UserProvider>(context, listen: false).checkIsLoggedIn();
+  }
+
   @override
   Widget build(BuildContext context) {
     var _spacer = SizedBox(height: getProportionateScreenHeight(20.0));

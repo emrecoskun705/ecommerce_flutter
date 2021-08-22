@@ -5,11 +5,12 @@ import 'package:flutter/cupertino.dart';
 
 class TrendProductProvider with ChangeNotifier {
   String _errorMessage = '';
-  bool _loading = false;
+  bool _loading = true;
   bool _error = false;
   List<MinimalProduct> productList = [];
 
   Future fetchTrendProducts() async {
+    setLoading(true);
     await TrendProductApi().fetchData().then((response) {
       if (response.statusCode == 200) {
         dynamic data = jsonDecode(response.body);
@@ -19,17 +20,23 @@ class TrendProductProvider with ChangeNotifier {
             title: product['title'],
             image: product['image'],
             price: product['price'],
-            discountPrice: product['discountPrice'] != null
-                ? product['discountPrice']
+            discountPrice: product['discount_price'] != null
+                ? product['discount_price']
                 : 0.0,
           ));
         }
       }
     });
+    setLoading(false);
   }
 
   void addProduct(MinimalProduct product) {
     productList.add(product);
+    notifyListeners();
+  }
+
+  void setLoading(bool value) {
+    _loading = value;
     notifyListeners();
   }
 }

@@ -22,8 +22,9 @@ class SearchApi {
             title: result['title'],
             image: result['image'],
             price: result['price'],
-            discountPrice:
-                result['discountPrice'] == null ? 0 : result['discountPrice']));
+            discountPrice: result['discount_price'] == null
+                ? 0
+                : result['discount_price']));
       }
     }
     return productList;

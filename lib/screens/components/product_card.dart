@@ -3,6 +3,7 @@ import 'package:ecommerce_flutter/providers/UserProvider.dart';
 import 'package:ecommerce_flutter/screens/details/product_detail.dart';
 import 'package:ecommerce_flutter/services/product/favourite_product_api.dart';
 import 'package:ecommerce_flutter/size_config.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:persistent_bottom_nav_bar/persistent-tab-view.dart';
@@ -82,14 +83,35 @@ class _ProductCardState extends State<ProductCard> {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Text(
-                      '\$${widget.product.price}',
-                      style: TextStyle(
-                        fontSize: getProportionateScreenWidth(18),
-                        fontWeight: FontWeight.w600,
-                        color: Color(0xFF979797),
-                      ),
+                    Row(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        //if product has discount price
+                        Text(
+                          widget.product.discountPrice != 0.0
+                              ? '\$${widget.product.discountPrice}'
+                              : '\$${widget.product.price}',
+                          style: TextStyle(
+                            fontSize: getProportionateScreenWidth(18),
+                            fontWeight: FontWeight.w600,
+                            color: Color(0xFF979797),
+                          ),
+                        ),
+                        widget.product.discountPrice != 0.0
+                            ? Text(
+                                '\$${widget.product.price}',
+                                style: TextStyle(
+                                  decoration: TextDecoration.lineThrough,
+                                  fontSize: getProportionateScreenWidth(10),
+                                  fontWeight: FontWeight.w600,
+                                  color: Colors.red,
+                                ),
+                              )
+                            : SizedBox(),
+                      ],
                     ),
+
                     // if user is logged in show inkwell(favourite(hear)) or empty box
                     Provider.of<UserProvider>(context).isLoggedIn
                         ? InkWell(

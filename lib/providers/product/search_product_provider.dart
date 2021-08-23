@@ -19,6 +19,17 @@ class SearchProductProvider extends ChangeNotifier {
     incrementPage();
   }
 
+  Future fetchCategoryProductData(String slug) async {
+    setIsLoading(true);
+    var productList = await SearchApi().fetchCategoryProducts(slug, page);
+    // print(productList);
+    updateLength(this.productList.length + productList.length);
+    addProducts(productList);
+
+    setIsLoading(false);
+    incrementPage();
+  }
+
   void addProducts(List<MinimalProduct> productList) {
     this.productList.addAll(productList);
     notifyListeners();

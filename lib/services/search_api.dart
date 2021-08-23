@@ -28,4 +28,28 @@ class SearchApi {
     }
     return productList;
   }
+
+  Future<List<MinimalProduct>> fetchCategoryProducts(
+      String slug, int page) async {
+    var url = Uri.parse('$kServerApiURL/category-product-list/');
+    url = url.replace(queryParameters: {'slug': slug, 'page': page.toString()});
+    http.Response response = await http.get(url);
+
+    List<MinimalProduct> productList = [];
+    if (response.statusCode == 200) {
+      dynamic data = jsonDecode(response.body);
+
+      for (dynamic result in data['results']) {
+        productList.add(MinimalProduct(
+            id: result['id'],
+            title: result['title'],
+            image: result['image'],
+            price: result['price'],
+            discountPrice: result['discount_price'] == null
+                ? 0
+                : result['discount_price']));
+      }
+    }
+    return productList;
+  }
 }

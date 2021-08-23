@@ -1,5 +1,7 @@
 import 'package:ecommerce_flutter/models/category.dart';
+import 'package:ecommerce_flutter/models/minimal_product.dart';
 import 'package:ecommerce_flutter/providers/category_provider.dart';
+import 'package:ecommerce_flutter/screens/category/components/product_list_category.dart';
 import 'package:ecommerce_flutter/size_config.dart';
 import 'package:flutter/material.dart';
 import 'package:modal_progress_hud_nsn/modal_progress_hud_nsn.dart';
@@ -8,8 +10,8 @@ import 'package:provider/provider.dart';
 
 class CategoryScreen extends StatefulWidget {
   final String slug;
-
-  CategoryScreen({required this.slug});
+  final bool showAll;
+  CategoryScreen({required this.slug, required this.showAll});
 
   @override
   _CategoryScreenState createState() => _CategoryScreenState();
@@ -39,6 +41,10 @@ class _CategoryScreenState extends State<CategoryScreen> {
                 ),
               );
             } else {
+              if (data.categoryList!.length <= 1 || widget.showAll) {
+                return ProductListCategory(categorySlug: widget.slug);
+              }
+
               return Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -63,7 +69,9 @@ class _CategoryScreenState extends State<CategoryScreen> {
                             onTap: () {
                               pushNewScreen(context,
                                   screen: CategoryScreen(
-                                      slug: data.categoryList![index].slug));
+                                    slug: category.slug,
+                                    showAll: category.slug == widget.slug,
+                                  ));
                             },
                             child: Card(
                               margin: EdgeInsets.all(0),

@@ -1,3 +1,4 @@
+import 'package:ecommerce_flutter/constants.dart';
 import 'package:ecommerce_flutter/models/minimal_product.dart';
 import 'package:ecommerce_flutter/providers/UserProvider.dart';
 import 'package:ecommerce_flutter/screens/details/product_detail.dart';
@@ -66,7 +67,9 @@ class _ProductCardState extends State<ProductCard> {
                     child: Hero(
                       tag: widget.product.id.toString(),
                       child: Image.network(
-                        widget.product.image,
+                        widget.product.image.contains(kServerURL)
+                            ? widget.product.image
+                            : '$kServerURL${widget.product.image}',
                       ),
                     ),
                   ),

@@ -19,6 +19,7 @@ class _MainScreenState extends State<MainScreen> {
     HomeScreen(),
     CategoryScreen(
       slug: 'root',
+      showAll: false,
     ),
     CartScreen(),
     AccountScreen(),

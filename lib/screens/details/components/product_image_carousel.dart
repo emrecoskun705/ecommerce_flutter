@@ -1,3 +1,4 @@
+import 'package:ecommerce_flutter/constants.dart';
 import 'package:ecommerce_flutter/models/product.dart';
 import 'package:ecommerce_flutter/size_config.dart';
 import 'package:flutter/material.dart';
@@ -38,12 +39,12 @@ class _ProductImageCarouselState extends State<ProductImageCarousel> {
                       ? Hero(
                           tag: widget.product.id.toString(),
                           child: Image.network(
-                            'http://192.168.0.108:8000$url',
+                            '$kServerURL$url',
                             fit: BoxFit.fill,
                           ),
                         )
                       : Image.network(
-                          'http://192.168.0.108:8000$url',
+                          '$kServerURL$url',
                           fit: BoxFit.fill,
                         ),
                 ),

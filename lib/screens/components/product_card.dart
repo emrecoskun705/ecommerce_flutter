@@ -103,6 +103,8 @@ class _ProductCardState extends State<ProductCard> {
                                 '\$${widget.product.price}',
                                 style: TextStyle(
                                   decoration: TextDecoration.lineThrough,
+                                  decorationThickness:
+                                      getProportionateScreenHeight(2.85),
                                   fontSize: getProportionateScreenWidth(10),
                                   fontWeight: FontWeight.w600,
                                   color: Colors.red,

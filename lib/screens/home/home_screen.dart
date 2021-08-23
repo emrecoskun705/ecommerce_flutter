@@ -36,32 +36,6 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget build(BuildContext context) {
     var _spacer = SizedBox(height: getProportionateScreenHeight(20.0));
     return Scaffold(
-      appBar: AppBar(
-        title: Center(
-          child: Text(
-            'Emre\'s E-Commerce',
-            style: TextStyle(
-              color: Color(0xFF8ECAE6),
-              fontWeight: FontWeight.bold,
-            ),
-          ),
-        ),
-        actions: [
-          IconButton(
-            padding: EdgeInsets.only(right: 10.0),
-            onPressed: () async {
-              showSearch(context: context, delegate: SearchBar());
-            },
-            icon: Icon(
-              Icons.search,
-              size: 40.0,
-              color: Colors.grey,
-            ),
-          ),
-        ],
-        elevation: 10,
-        backgroundColor: Colors.white,
-      ),
       body: ListView(
         children: [
           _spacer,

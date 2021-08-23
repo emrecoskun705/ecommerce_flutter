@@ -6,15 +6,20 @@ class PersistentTabProvider with ChangeNotifier {
   PersistentTabController _controller =
       PersistentTabController(initialIndex: 0);
 
-  bool isVisibleAppBar = true;
+  bool isVisibleAppBarBool = true;
 
   void changeTab(int value) {
     _controller.jumpToTab(value);
+
     notifyListeners();
   }
 
-  void setIsVisibleAppBar(bool value) {
-    isVisibleAppBar = value;
+  void isVisibleAppBar(index) {
+    if (index == 0 || index == 1) {
+      this.isVisibleAppBarBool = true;
+    } else {
+      this.isVisibleAppBarBool = false;
+    }
     notifyListeners();
   }
 

@@ -12,7 +12,6 @@ class SearchApi {
     http.Response response = await http.get(url);
 
     List<MinimalProduct> productList = [];
-    print(response.statusCode);
     if (response.statusCode == 200) {
       dynamic data = jsonDecode(response.body);
 

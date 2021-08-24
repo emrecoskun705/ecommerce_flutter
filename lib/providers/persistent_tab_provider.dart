@@ -10,7 +10,6 @@ class PersistentTabProvider with ChangeNotifier {
 
   void changeTab(int value) {
     _controller.jumpToTab(value);
-
     notifyListeners();
   }
 

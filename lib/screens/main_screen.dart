@@ -1,6 +1,6 @@
 import 'package:ecommerce_flutter/providers/persistent_tab_provider.dart';
 import 'package:ecommerce_flutter/screens/account/account_screen.dart';
-import 'package:ecommerce_flutter/screens/cart_screen.dart';
+import 'package:ecommerce_flutter/screens/cart/cart_screen.dart';
 import 'package:ecommerce_flutter/screens/category/category_screen.dart';
 import 'package:ecommerce_flutter/screens/home/home_screen.dart';
 import 'package:ecommerce_flutter/screens/search/search.dart';
@@ -8,6 +8,7 @@ import 'package:flutter/material.dart';
 import 'package:persistent_bottom_nav_bar/persistent-tab-view.dart';
 import 'package:provider/provider.dart';
 import '../size_config.dart';
+import 'cart/components/cart_page.dart';
 
 class MainScreen extends StatefulWidget {
   @override
@@ -40,11 +41,18 @@ class _MainScreenState extends State<MainScreen> {
         inactiveColorPrimary: Colors.grey,
       ),
       PersistentBottomNavBarItem(
-        icon: Icon(Icons.shopping_cart),
-        title: ("Cart"),
-        activeColorPrimary: Colors.blue,
-        inactiveColorPrimary: Colors.grey,
-      ),
+          icon: Icon(Icons.shopping_cart),
+          title: ("Cart"),
+          activeColorPrimary: Colors.blue,
+          inactiveColorPrimary: Colors.grey,
+          onPressed: (_) {
+            pushNewScreen(
+              context,
+              screen: CartPage(),
+              pageTransitionAnimation: PageTransitionAnimation.slideUp,
+              withNavBar: false,
+            );
+          }),
       PersistentBottomNavBarItem(
           icon: Icon(Icons.account_circle),
           title: ("Account"),

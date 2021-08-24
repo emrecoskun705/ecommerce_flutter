@@ -1,11 +1,8 @@
-import 'package:ecommerce_flutter/models/category.dart';
-import 'package:ecommerce_flutter/models/minimal_product.dart';
 import 'package:ecommerce_flutter/providers/category_provider.dart';
+import 'package:ecommerce_flutter/screens/category/components/category_list.dart';
 import 'package:ecommerce_flutter/screens/category/components/product_list_category.dart';
-import 'package:ecommerce_flutter/size_config.dart';
 import 'package:flutter/material.dart';
 import 'package:modal_progress_hud_nsn/modal_progress_hud_nsn.dart';
-import 'package:persistent_bottom_nav_bar/persistent-tab-view.dart';
 import 'package:provider/provider.dart';
 
 class CategoryScreen extends StatefulWidget {
@@ -41,59 +38,13 @@ class _CategoryScreenState extends State<CategoryScreen> {
                 ),
               );
             } else {
+              // show product list
               if (data.categoryList!.length <= 1 || widget.showAll) {
                 return ProductListCategory(categorySlug: widget.slug);
               }
 
-              return Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Padding(
-                    padding: EdgeInsets.symmetric(
-                        vertical: getProportionateScreenHeight(20),
-                        horizontal: getProportionateScreenWidth(15)),
-                    child: Text(
-                      widget.slug == 'root'
-                          ? 'Categories'
-                          : data.categoryList![0].name,
-                      style:
-                          TextStyle(fontSize: getProportionateScreenHeight(25)),
-                    ),
-                  ),
-                  Flexible(
-                    child: ListView.builder(
-                        itemCount: data.categoryList!.length,
-                        itemBuilder: (context, index) {
-                          Category category = data.categoryList![index];
-                          return GestureDetector(
-                            onTap: () {
-                              pushNewScreen(context,
-                                  screen: CategoryScreen(
-                                    slug: category.slug,
-                                    showAll: category.slug == widget.slug,
-                                  ));
-                            },
-                            child: Card(
-                              margin: EdgeInsets.all(0),
-                              elevation: 3,
-                              child: ListTile(
-                                leading: Text(
-                                  category.slug == widget.slug
-                                      ? 'Show All ${category.name}'
-                                      : category.name,
-                                  style: TextStyle(
-                                      fontSize:
-                                          getProportionateScreenHeight(18)),
-                                ),
-                                trailing:
-                                    Icon(Icons.keyboard_arrow_right_sharp),
-                              ),
-                            ),
-                          );
-                        }),
-                  ),
-                ],
-              );
+              // show category list
+              return CategoryList(widget, data);
             }
           },
         ),

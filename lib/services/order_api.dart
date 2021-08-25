@@ -18,18 +18,36 @@ class OrderApi {
     });
 
     List<OrderProduct> productList = [];
-    print(response.statusCode);
     if (response.statusCode == 200) {
       dynamic data = jsonDecode(response.body);
       for (var orderProduct in data['items']) {
         MinimalProduct minimalProduct = await MinimalProductApi()
             .fetchMinimalProduct(orderProduct['product'].toInt());
         int quantity = orderProduct['quantity'].toInt();
-        productList
-            .add(OrderProduct(product: minimalProduct, quantity: quantity));
+        productList.add(OrderProduct(
+            id: orderProduct['id'].toInt(),
+            product: minimalProduct,
+            quantity: quantity));
       }
     }
 
     return Order(productList: productList);
+  }
+
+  Future<bool> changeQuantity(int orderProductId, int quantity) async {
+    var token = await UserTokenSecureStorage.getToken();
+    var url = Uri.parse('$kServerApiURL/change-quantity/');
+    http.Response response = await http.post(url, headers: {
+      HttpHeaders.authorizationHeader: 'Token ${token.toString()}',
+    }, body: {
+      'id': orderProductId.toString(),
+      'quantity': quantity.toString(),
+    });
+
+    if (response.statusCode == 200) {
+      return true;
+    }
+
+    return false;
   }
 }

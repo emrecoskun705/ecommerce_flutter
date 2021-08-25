@@ -7,11 +7,31 @@ class OrderProvider extends ChangeNotifier {
   Order? order;
   bool isLoading = true;
 
+  final OrderApi orderApi = OrderApi();
+
   Future fetchOrder() async {
     setIsLoading(true);
-    Order order = await OrderApi().fetchOrder();
+    Order order = await orderApi.fetchOrder();
     setOrder(order);
     setIsLoading(false);
+  }
+
+  Future<bool> changeQuantity(int orderProductId, int newQuantity) async {
+    setIsLoading(true);
+    bool success = await orderApi.changeQuantity(orderProductId, newQuantity);
+    if (success) {
+      int i = 0;
+      for (var orderProduct in order!.productList) {
+        if (orderProduct.id == orderProductId) {
+          order!.productList[i].quantity = newQuantity;
+          notifyListeners();
+          break;
+        }
+        i++;
+      }
+    }
+    setIsLoading(false);
+    return success;
   }
 
   void removeOrderProduct(int index) {}

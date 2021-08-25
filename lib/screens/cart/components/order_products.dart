@@ -41,7 +41,7 @@ class _OrderProductsState extends State<OrderProducts> {
                   Provider.of<OrderProvider>(context).order!.productList.length,
               itemBuilder: (context, index) {
                 OrderProduct orderProduct =
-                    context.read<OrderProvider>().order!.productList[index];
+                    context.watch<OrderProvider>().order!.productList[index];
                 return Padding(
                   padding: EdgeInsets.symmetric(vertical: 10),
                   child: Dismissible(

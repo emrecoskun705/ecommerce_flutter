@@ -34,7 +34,20 @@ class OrderProvider extends ChangeNotifier {
     return success;
   }
 
-  void removeOrderProduct(int index) {}
+  Future<bool> deleteOrderProduct(OrderProduct orderProduct) async {
+    setIsLoading(true);
+    bool success = await orderApi.deleteOrderProduct(orderProduct.id);
+    if (success) {
+      removeOrderProduct(orderProduct);
+    }
+    setIsLoading(false);
+    return success;
+  }
+
+  void removeOrderProduct(OrderProduct orderProduct) {
+    order!.productList.remove(orderProduct);
+    notifyListeners();
+  }
 
   void addOrderProduct(OrderProduct orderProduct) {
     order!.productList.add(orderProduct);

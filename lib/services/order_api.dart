@@ -36,12 +36,25 @@ class OrderApi {
 
   Future<bool> changeQuantity(int orderProductId, int quantity) async {
     var token = await UserTokenSecureStorage.getToken();
-    var url = Uri.parse('$kServerApiURL/change-quantity/');
-    http.Response response = await http.post(url, headers: {
+    var url = Uri.parse('$kServerApiURL/order-product/$orderProductId/');
+    http.Response response = await http.put(url, headers: {
       HttpHeaders.authorizationHeader: 'Token ${token.toString()}',
     }, body: {
-      'id': orderProductId.toString(),
       'quantity': quantity.toString(),
+    });
+
+    if (response.statusCode == 200) {
+      return true;
+    }
+
+    return false;
+  }
+
+  Future<bool> deleteOrderProduct(int orderProductId) async {
+    var token = await UserTokenSecureStorage.getToken();
+    var url = Uri.parse('$kServerApiURL/order-product/$orderProductId/');
+    http.Response response = await http.delete(url, headers: {
+      HttpHeaders.authorizationHeader: 'Token ${token.toString()}',
     });
 
     if (response.statusCode == 200) {

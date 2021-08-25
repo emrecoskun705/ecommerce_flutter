@@ -48,11 +48,8 @@ class _OrderProductsState extends State<OrderProducts> {
                     key: Key(orderProduct.product.id.toString()),
                     direction: DismissDirection.endToStart,
                     onDismissed: (direction) {
-                      context
-                          .read<OrderProvider>()
-                          .order!
-                          .productList
-                          .remove(orderProduct);
+                      Provider.of<OrderProvider>(context, listen: false)
+                          .deleteOrderProduct(orderProduct);
                     },
                     background: Container(
                       padding: EdgeInsets.symmetric(horizontal: 20),

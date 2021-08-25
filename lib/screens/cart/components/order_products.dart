@@ -26,7 +26,7 @@ class _OrderProductsState extends State<OrderProducts> {
 
   @override
   Widget build(BuildContext context) {
-    return Provider.of<OrderProvider>(context).isLoading
+    return context.watch<OrderProvider>().isLoading
         ? Container(
             child: ModalProgressHUD(
               inAsyncCall: true,
@@ -36,38 +36,40 @@ class _OrderProductsState extends State<OrderProducts> {
         : Padding(
             padding: EdgeInsets.symmetric(
                 horizontal: getProportionateScreenWidth(20)),
-            child: ListView.builder(
-              itemCount:
-                  Provider.of<OrderProvider>(context).order!.productList.length,
-              itemBuilder: (context, index) {
-                OrderProduct orderProduct =
-                    context.watch<OrderProvider>().order!.productList[index];
-                return Padding(
-                  padding: EdgeInsets.symmetric(vertical: 10),
-                  child: Dismissible(
-                    key: Key(orderProduct.product.id.toString()),
-                    direction: DismissDirection.endToStart,
-                    onDismissed: (direction) {
-                      Provider.of<OrderProvider>(context, listen: false)
-                          .deleteOrderProduct(orderProduct);
-                    },
-                    background: Container(
-                      padding: EdgeInsets.symmetric(horizontal: 20),
-                      decoration: BoxDecoration(
-                        color: Color(0xFFFFE6E6),
-                        borderRadius: BorderRadius.circular(15),
+            child: Consumer<OrderProvider>(
+              builder: (context, data, _) {
+                var order = data.order;
+                return ListView.builder(
+                  itemCount: order!.productList.length,
+                  itemBuilder: (context, index) {
+                    OrderProduct orderProduct = order.productList[index];
+                    return Padding(
+                      padding: EdgeInsets.symmetric(vertical: 10),
+                      child: Dismissible(
+                        key: Key(orderProduct.product.id.toString()),
+                        direction: DismissDirection.endToStart,
+                        onDismissed: (direction) {
+                          data.deleteOrderProduct(orderProduct);
+                        },
+                        background: Container(
+                          padding: EdgeInsets.symmetric(horizontal: 20),
+                          decoration: BoxDecoration(
+                            color: Color(0xFFFFE6E6),
+                            borderRadius: BorderRadius.circular(15),
+                          ),
+                          child: Row(
+                            children: [
+                              Spacer(),
+                              SvgPicture.asset("assets/icons/Trash.svg"),
+                            ],
+                          ),
+                        ),
+                        child: CartProductCard(
+                          orderProduct: orderProduct,
+                        ),
                       ),
-                      child: Row(
-                        children: [
-                          Spacer(),
-                          SvgPicture.asset("assets/icons/Trash.svg"),
-                        ],
-                      ),
-                    ),
-                    child: CartProductCard(
-                      orderProduct: orderProduct,
-                    ),
-                  ),
+                    );
+                  },
                 );
               },
             ),

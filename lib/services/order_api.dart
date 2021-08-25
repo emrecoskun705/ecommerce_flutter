@@ -63,4 +63,26 @@ class OrderApi {
 
     return false;
   }
+
+  Future<OrderProduct?> addProduct(MinimalProduct product) async {
+    var token = await UserTokenSecureStorage.getToken();
+    var url = Uri.parse('$kServerApiURL/order-product/');
+    http.Response response = await http.post(
+      url,
+      headers: {
+        HttpHeaders.authorizationHeader: 'Token ${token.toString()}',
+      },
+      body: {
+        'productId': product.id.toString(),
+      },
+    );
+
+    if (response.statusCode == 201) {
+      dynamic data = jsonDecode(response.body);
+      return OrderProduct(
+          id: data['id'].toInt(), product: product, quantity: 1);
+    }
+
+    return null;
+  }
 }

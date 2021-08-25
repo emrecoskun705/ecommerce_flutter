@@ -1,5 +1,6 @@
 import 'package:ecommerce_flutter/models/cart/order.dart';
 import 'package:ecommerce_flutter/models/cart/order_product.dart';
+import 'package:ecommerce_flutter/models/minimal_product.dart';
 import 'package:ecommerce_flutter/services/order_api.dart';
 import 'package:flutter/cupertino.dart';
 
@@ -42,6 +43,19 @@ class OrderProvider extends ChangeNotifier {
     }
     setIsLoading(false);
     return success;
+  }
+
+  Future<bool> postOrderProduct(MinimalProduct product) async {
+    setIsLoading(true);
+    var orderProduct = await orderApi.addProduct(product);
+    if (orderProduct != null) {
+      addOrderProduct(orderProduct);
+      setIsLoading(false);
+      return true;
+    } else {
+      setIsLoading(false);
+      return false;
+    }
   }
 
   void removeOrderProduct(OrderProduct orderProduct) {

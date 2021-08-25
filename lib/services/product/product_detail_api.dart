@@ -20,6 +20,13 @@ class ProductDetailApi {
           images.add(img['image']);
         }
       }
+      int i = 0;
+      for (var img in images) {
+        if (!img.toString().contains(kServerApiURL)) {
+          images[i] = '$kServerURL$img';
+        }
+        i++;
+      }
 
       // fetch favourite product response. If it is true, product is favourite otherwise not
       dynamic responseFavouriteProduct =

@@ -39,12 +39,12 @@ class _ProductImageCarouselState extends State<ProductImageCarousel> {
                       ? Hero(
                           tag: widget.product.id.toString(),
                           child: Image.network(
-                            '$kServerURL$url',
+                            url,
                             fit: BoxFit.fill,
                           ),
                         )
                       : Image.network(
-                          '$kServerURL$url',
+                          url,
                           fit: BoxFit.fill,
                         ),
                 ),

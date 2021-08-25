@@ -13,7 +13,9 @@ class CartPage extends StatelessWidget {
     return Scaffold(
       appBar: buildAppBar(context),
       body: OrderProducts(),
-      bottomNavigationBar: buildBottom(context),
+      bottomNavigationBar: context.watch<OrderProvider>().isLoading
+          ? SizedBox()
+          : buildBottom(context),
     );
   }
 

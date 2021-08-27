@@ -3,7 +3,6 @@ import 'package:ecommerce_flutter/screens/account/account_screen.dart';
 import 'package:ecommerce_flutter/screens/cart/cart_screen.dart';
 import 'package:ecommerce_flutter/screens/category/category_screen.dart';
 import 'package:ecommerce_flutter/screens/home/home_screen.dart';
-import 'package:ecommerce_flutter/screens/search/search.dart';
 import 'package:flutter/material.dart';
 import 'package:persistent_bottom_nav_bar/persistent-tab-view.dart';
 import 'package:provider/provider.dart';
@@ -85,34 +84,6 @@ class _MainScreenState extends State<MainScreen> {
     PersistentTabController _controller =
         Provider.of<PersistentTabProvider>(context).controller;
     return Scaffold(
-      appBar: Provider.of<PersistentTabProvider>(context).isVisibleAppBarBool
-          ? AppBar(
-              title: Center(
-                child: Text(
-                  'Emre\'s E-Commerce',
-                  style: TextStyle(
-                    color: Color(0xFF8ECAE6),
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-              ),
-              actions: [
-                IconButton(
-                  padding: EdgeInsets.only(right: 10.0),
-                  onPressed: () async {
-                    showSearch(context: context, delegate: SearchBar());
-                  },
-                  icon: Icon(
-                    Icons.search,
-                    size: 40.0,
-                    color: Colors.grey,
-                  ),
-                ),
-              ],
-              elevation: 10,
-              backgroundColor: Colors.white,
-            )
-          : null,
       body: buildPersistentTabView(context, _controller),
     );
   }

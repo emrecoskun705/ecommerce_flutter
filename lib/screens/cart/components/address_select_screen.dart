@@ -1,5 +1,6 @@
 import 'package:ecommerce_flutter/providers/address_provider.dart';
 import 'package:ecommerce_flutter/providers/order_provider.dart';
+import 'package:ecommerce_flutter/screens/cart/components/address_form_screen.dart';
 import 'package:ecommerce_flutter/screens/cart/components/checkout_page.dart';
 import 'package:ecommerce_flutter/size_config.dart';
 import 'package:flutter/material.dart';
@@ -24,26 +25,7 @@ class _AddressSelectScreenState extends State<AddressSelectScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        iconTheme: IconThemeData(color: Colors.black),
-        backgroundColor: Color(0xFFFAFAFA),
-        title: Text(
-          'Select or Create Address',
-          style: TextStyle(
-            color: Colors.black.withOpacity(0.7),
-          ),
-        ),
-        actions: [
-          IconButton(
-            onPressed: () {},
-            icon: Icon(
-              Icons.add,
-              size: getProportionateScreenHeight(40),
-              color: Colors.black.withOpacity(0.4),
-            ),
-          ),
-        ],
-      ),
+      appBar: buildAppBar(context),
       body: ChangeNotifierProvider.value(
         value: _addressProvider,
         child: Consumer<AddressProvider>(
@@ -93,6 +75,31 @@ class _AddressSelectScreenState extends State<AddressSelectScreen> {
           },
         ),
       ),
+    );
+  }
+
+  AppBar buildAppBar(BuildContext context) {
+    return AppBar(
+      iconTheme: IconThemeData(color: Colors.black),
+      backgroundColor: Color(0xFFFAFAFA),
+      title: Text(
+        'Select or Create Address',
+        style: TextStyle(
+          color: Colors.black.withOpacity(0.7),
+        ),
+      ),
+      actions: [
+        IconButton(
+          onPressed: () {
+            pushNewScreen(context, screen: AddressFormScreen());
+          },
+          icon: Icon(
+            Icons.add,
+            size: getProportionateScreenHeight(40),
+            color: Colors.black.withOpacity(0.4),
+          ),
+        ),
+      ],
     );
   }
 }

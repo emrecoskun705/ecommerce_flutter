@@ -123,7 +123,6 @@ class OrderApi {
         HttpHeaders.authorizationHeader: 'Token ${token.toString()}',
       },
       body: {
-        'id': address.id,
         'address_title': address.addressTitle,
         'country': address.country,
         'province': address.province,

@@ -1,7 +1,9 @@
 import 'package:ecommerce_flutter/providers/order_provider.dart';
+import 'package:ecommerce_flutter/screens/cart/components/address_select_screen.dart';
 import 'package:ecommerce_flutter/screens/components/rounded_button.dart';
 import 'package:ecommerce_flutter/size_config.dart';
 import 'package:flutter/material.dart';
+import 'package:persistent_bottom_nav_bar/persistent-tab-view.dart';
 import 'package:provider/provider.dart';
 import 'order_products.dart';
 
@@ -15,11 +17,11 @@ class CartPage extends StatelessWidget {
       body: OrderProducts(),
       bottomNavigationBar: context.watch<OrderProvider>().isLoading
           ? SizedBox()
-          : buildBottom(context),
+          : buildBottomNavbar(context),
     );
   }
 
-  Material buildBottom(BuildContext context) {
+  Material buildBottomNavbar(BuildContext context) {
     return Material(
       elevation: 10,
       child: Container(
@@ -49,7 +51,12 @@ class CartPage extends StatelessWidget {
                   ],
                 ),
                 RoundedButton(
-                    colour: Colors.orange, title: 'Buy', onPressed: () {}),
+                  colour: Colors.orange,
+                  title: 'Buy',
+                  onPressed: () {
+                    pushNewScreen(context, screen: AddressSelectScreen());
+                  },
+                )
               ],
             ),
           ),

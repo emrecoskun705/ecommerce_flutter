@@ -9,17 +9,11 @@ class CartScreen extends StatefulWidget {
   _CartScreenState createState() => _CartScreenState();
 }
 
+// this is page won't be ever opened it only exist for showing Cart Icon at bottom
+// when user clicks that button cart page will occur not Cart screen
 class _CartScreenState extends State<CartScreen> {
   @override
   void initState() {
-    // SchedulerBinding.instance!.addPersistentFrameCallback((_) {
-    //   pushNewScreen(
-    //     context,
-    //     screen: CartPage(),
-    //     pageTransitionAnimation: PageTransitionAnimation.slideUp,
-    //     withNavBar: false,
-    //   );
-    // });
     super.initState();
   }
 

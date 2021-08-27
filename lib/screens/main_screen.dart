@@ -29,11 +29,12 @@ class _MainScreenState extends State<MainScreen> {
   List<PersistentBottomNavBarItem> _navbarItems() {
     return [
       PersistentBottomNavBarItem(
-        icon: Icon(Icons.home),
-        title: ("Home"),
-        activeColorPrimary: Colors.blue,
-        inactiveColorPrimary: Colors.grey,
-      ),
+          icon: Icon(Icons.home),
+          title: ("Home"),
+          activeColorPrimary: Colors.blue,
+          inactiveColorPrimary: Colors.grey,
+          routeAndNavigatorSettings:
+              RouteAndNavigatorSettings(initialRoute: '/')),
       PersistentBottomNavBarItem(
         icon: Icon(Icons.category),
         title: ("Categories"),

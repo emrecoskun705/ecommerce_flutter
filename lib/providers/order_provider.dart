@@ -1,3 +1,4 @@
+import 'package:ecommerce_flutter/models/cart/address.dart';
 import 'package:ecommerce_flutter/models/cart/order.dart';
 import 'package:ecommerce_flutter/models/cart/order_product.dart';
 import 'package:ecommerce_flutter/models/minimal_product.dart';
@@ -56,6 +57,16 @@ class OrderProvider extends ChangeNotifier {
       setIsLoading(false);
       return false;
     }
+  }
+
+  void setShippingAddress(Address address) {
+    order!.shippingAddress = address;
+    notifyListeners();
+  }
+
+  void setBillingAddress(Address address) {
+    order!.billingAddress = address;
+    notifyListeners();
   }
 
   void removeOrderProduct(OrderProduct orderProduct) {

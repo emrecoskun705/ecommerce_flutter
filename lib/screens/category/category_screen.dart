@@ -1,6 +1,7 @@
 import 'package:ecommerce_flutter/providers/category_provider.dart';
 import 'package:ecommerce_flutter/screens/category/components/category_list.dart';
 import 'package:ecommerce_flutter/screens/category/components/product_list_category.dart';
+import 'package:ecommerce_flutter/screens/search/search.dart';
 import 'package:flutter/material.dart';
 import 'package:modal_progress_hud_nsn/modal_progress_hud_nsn.dart';
 import 'package:provider/provider.dart';
@@ -26,6 +27,7 @@ class _CategoryScreenState extends State<CategoryScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: buildAppBar(context),
       body: ChangeNotifierProvider.value(
         value: categoryProvider,
         child: Consumer<CategoryProvider>(
@@ -49,6 +51,35 @@ class _CategoryScreenState extends State<CategoryScreen> {
           },
         ),
       ),
+    );
+  }
+
+  AppBar buildAppBar(BuildContext context) {
+    return AppBar(
+      title: Center(
+        child: Text(
+          'Emre\'s E-Commerce',
+          style: TextStyle(
+            color: Color(0xFF8ECAE6),
+            fontWeight: FontWeight.bold,
+          ),
+        ),
+      ),
+      actions: [
+        IconButton(
+          padding: EdgeInsets.only(right: 10.0),
+          onPressed: () async {
+            showSearch(context: context, delegate: SearchBar());
+          },
+          icon: Icon(
+            Icons.search,
+            size: 40.0,
+            color: Colors.grey,
+          ),
+        ),
+      ],
+      elevation: 10,
+      backgroundColor: Colors.white,
     );
   }
 }

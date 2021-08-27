@@ -28,17 +28,18 @@ class _MainScreenState extends State<MainScreen> {
   List<PersistentBottomNavBarItem> _navbarItems() {
     return [
       PersistentBottomNavBarItem(
-          icon: Icon(Icons.home),
-          title: ("Home"),
-          activeColorPrimary: Colors.blue,
-          inactiveColorPrimary: Colors.grey,
-          routeAndNavigatorSettings:
-              RouteAndNavigatorSettings(initialRoute: '/')),
+        icon: Icon(Icons.home),
+        title: ("Home"),
+        activeColorPrimary: Colors.blue,
+        inactiveColorPrimary: Colors.grey,
+        routeAndNavigatorSettings: RouteAndNavigatorSettings(initialRoute: '/'),
+      ),
       PersistentBottomNavBarItem(
         icon: Icon(Icons.category),
         title: ("Categories"),
         activeColorPrimary: Colors.blue,
         inactiveColorPrimary: Colors.grey,
+        routeAndNavigatorSettings: RouteAndNavigatorSettings(initialRoute: '/'),
       ),
       PersistentBottomNavBarItem(
           icon: Icon(Icons.shopping_cart),
@@ -62,20 +63,6 @@ class _MainScreenState extends State<MainScreen> {
               initialRoute: '/',
               routes: {'/register': (context) => Container()})),
     ];
-  }
-
-  @override
-  void initState() {
-    super.initState();
-    Provider.of<PersistentTabProvider>(context, listen: false)
-        .controller
-        .addListener(() {
-      int index = Provider.of<PersistentTabProvider>(context, listen: false)
-          .controller
-          .index;
-      Provider.of<PersistentTabProvider>(context, listen: false)
-          .isVisibleAppBar(index);
-    });
   }
 
   @override

@@ -21,8 +21,6 @@ class _LoginScreenState extends State<LoginScreen> {
         .fetchUser(emailController.text, passwordController.text)
         .then((value) {
       if (value) {
-        //close bottom sheet
-        Navigator.pop(context);
         //redirect to home tab
         Provider.of<PersistentTabProvider>(context, listen: false).changeTab(0);
       }

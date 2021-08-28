@@ -103,19 +103,30 @@ class _ProductDetailState extends State<ProductDetail> {
                         colour: Colors.lightBlueAccent,
                         title: 'Add to cart',
                         onPressed: () async {
-                          Provider.of<OrderProvider>(context, listen: false)
-                              .postOrderProduct(MinimalProduct(
-                                  id: data.product!.id,
-                                  title: data.product!.title,
-                                  image: data.product!.images[0],
-                                  price: data.product!.price,
-                                  discountPrice: data.product!.discountPrice));
-                          pushNewScreen(
-                            context,
-                            screen: CartPage(),
-                            pageTransitionAnimation:
-                                PageTransitionAnimation.slideUp,
-                          );
+                          // if user is not logged in redirect to account screen for authentication
+                          // otherwise add product to cart
+                          if (!Provider.of<UserProvider>(context, listen: false)
+                              .isLoggedIn) {
+                            Provider.of<PersistentTabProvider>(context,
+                                    listen: false)
+                                .changeTab(3);
+                          } else {
+                            await Provider.of<OrderProvider>(context,
+                                    listen: false)
+                                .postOrderProduct(MinimalProduct(
+                                    id: data.product!.id,
+                                    title: data.product!.title,
+                                    image: data.product!.images[0],
+                                    price: data.product!.price,
+                                    discountPrice:
+                                        data.product!.discountPrice));
+                            pushNewScreen(
+                              context,
+                              screen: CartPage(),
+                              pageTransitionAnimation:
+                                  PageTransitionAnimation.slideUp,
+                            );
+                          }
                         },
                       )
                     ],

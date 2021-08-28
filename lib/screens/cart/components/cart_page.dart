@@ -1,4 +1,6 @@
+import 'package:ecommerce_flutter/providers/UserProvider.dart';
 import 'package:ecommerce_flutter/providers/order_provider.dart';
+import 'package:ecommerce_flutter/providers/persistent_tab_provider.dart';
 import 'package:ecommerce_flutter/screens/cart/components/address_select_screen.dart';
 import 'package:ecommerce_flutter/screens/components/rounded_button.dart';
 import 'package:ecommerce_flutter/size_config.dart';
@@ -54,7 +56,14 @@ class CartPage extends StatelessWidget {
                   colour: Colors.orange,
                   title: 'Buy',
                   onPressed: () {
-                    pushNewScreen(context, screen: AddressSelectScreen());
+                    if (Provider.of<UserProvider>(context, listen: false)
+                        .isLoggedIn) {
+                      pushNewScreen(context, screen: AddressSelectScreen());
+                    } else {
+                      Provider.of<PersistentTabProvider>(context, listen: false)
+                          .changeTab(3);
+                      Navigator.pop(context);
+                    }
                   },
                 )
               ],
@@ -76,10 +85,6 @@ class CartPage extends StatelessWidget {
             Text(
               "Your Cart",
               style: TextStyle(color: Colors.black),
-            ),
-            Text(
-              "3 items",
-              style: Theme.of(context).textTheme.caption,
             ),
           ],
         ),

@@ -21,8 +21,6 @@ class _RegisterScreenState extends State<RegisterScreen> {
         .registerUser(email.text, password1.text, password2.text)
         .then((value) {
       if (value) {
-        //close bottom sheet
-        Navigator.pop(context);
         //redirect to home tab
         Provider.of<PersistentTabProvider>(context, listen: false).changeTab(0);
       }

@@ -12,21 +12,23 @@ class AccountPage extends StatelessWidget {
       await Provider.of<UserProvider>(context, listen: false).logout();
     }
 
-    return ModalProgressHUD(
-      inAsyncCall: Provider.of<UserProvider>(context).isLoading,
-      child: Center(
-        child: Column(
-          children: [
-            Text(
-              'You have logged in',
-              style: TextStyle(fontSize: 25.0),
-            ),
-            RoundedButton(
-              colour: Color(0xFFFFB703),
-              title: 'Log out',
-              onPressed: logout,
-            )
-          ],
+    return Scaffold(
+      body: ModalProgressHUD(
+        inAsyncCall: Provider.of<UserProvider>(context).isLoading,
+        child: Center(
+          child: Column(
+            children: [
+              Text(
+                'You have logged in',
+                style: TextStyle(fontSize: 25.0),
+              ),
+              RoundedButton(
+                colour: Color(0xFFFFB703),
+                title: 'Log out',
+                onPressed: logout,
+              )
+            ],
+          ),
         ),
       ),
     );

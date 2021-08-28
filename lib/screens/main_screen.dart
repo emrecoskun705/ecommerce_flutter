@@ -101,12 +101,7 @@ class _MainScreenState extends State<MainScreen> {
         duration: Duration(milliseconds: 200),
         curve: Curves.ease,
       ),
-      screenTransitionAnimation: ScreenTransitionAnimation(
-        // Screen transition animation on change of selected tab.
-        animateTabTransition: true,
-        curve: Curves.ease,
-        duration: Duration(milliseconds: 200),
-      ),
+
       navBarStyle:
           NavBarStyle.style6, // Choose the nav bar style with this property.
     );

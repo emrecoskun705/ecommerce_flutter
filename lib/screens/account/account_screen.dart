@@ -11,8 +11,8 @@ import 'components/authentication_page.dart';
 class AccountScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    bool isLoggedIn = Provider.of<UserProvider>(context).isLoggedIn;
-
-    return isLoggedIn ? AccountPage() : AuthenticationPage();
+    return Provider.of<UserProvider>(context).isLoggedIn
+        ? AccountPage()
+        : AuthenticationPage();
   }
 }

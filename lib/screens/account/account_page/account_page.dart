@@ -1,9 +1,11 @@
 import 'package:ecommerce_flutter/models/account_choice.dart';
 import 'package:ecommerce_flutter/providers/UserProvider.dart';
+import 'package:ecommerce_flutter/screens/account/account_page/components/my_favourite_screen.dart';
 import 'package:ecommerce_flutter/size_config.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:modal_progress_hud_nsn/modal_progress_hud_nsn.dart';
+import 'package:persistent_bottom_nav_bar/persistent-tab-view.dart';
 import 'package:provider/provider.dart';
 
 //user detail page
@@ -19,7 +21,11 @@ class _AccountPageState extends State<AccountPage> {
       AccountChoice(
           name: 'My Orders', icon: Icons.shopping_cart, function: () {}),
       AccountChoice(
-          name: 'My Favourites', icon: FontAwesomeIcons.heart, function: () {}),
+          name: 'My Favourites',
+          icon: FontAwesomeIcons.heart,
+          function: () {
+            pushNewScreen(context, screen: MyFavouriteScreen());
+          }),
       AccountChoice(
           name: 'My Refunds', icon: Icons.arrow_back, function: () {}),
       AccountChoice(

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'login_screen.dart';
-import 'register_screen.dart';
+import 'components/login_screen.dart';
+import 'components/register_screen.dart';
 
 class AuthenticationPage extends StatelessWidget {
   @override

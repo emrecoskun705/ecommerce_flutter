@@ -44,28 +44,35 @@ class _AddressSelectScreenState extends State<AddressSelectScreen> {
                     return Padding(
                       padding: EdgeInsets.all(10.0),
                       child: Card(
-                        child: Padding(
-                          padding: EdgeInsets.all(8.0),
-                          child: InkWell(
-                            child: Text(
-                              data.addressList[index].addressTitle,
-                              style: TextStyle(
-                                fontSize: getProportionateScreenHeight(20),
+                        child: InkWell(
+                          onTap: () {
+                            Provider.of<OrderProvider>(context, listen: false)
+                                .order!
+                                .shippingAddress = data.addressList[index];
+                            Provider.of<OrderProvider>(context, listen: false)
+                                .order!
+                                .billingAddress = data.addressList[index];
+                            Provider.of<AddressProvider>(context, listen: false)
+                                .addAddressToOrder(data.addressList[index].id);
+                            pushNewScreen(context, screen: CheckoutPage());
+                          },
+                          child: Padding(
+                            padding: EdgeInsets.all(8.0),
+                            child: ListTile(
+                              leading: Icon(Icons.location_city),
+                              title: Text(
+                                data.addressList[index].addressTitle,
+                                maxLines: 1,
+                              ),
+                              subtitle: Text(
+                                '${data.addressList[index].detail} lorem ipsum lorem ipsum lorem ipsum',
+                                maxLines: 2,
+                              ),
+                              trailing: Text(
+                                '${data.addressList[index].province}/${data.addressList[index].country}',
+                                maxLines: 1,
                               ),
                             ),
-                            onTap: () {
-                              Provider.of<OrderProvider>(context, listen: false)
-                                  .order!
-                                  .shippingAddress = data.addressList[index];
-                              Provider.of<OrderProvider>(context, listen: false)
-                                  .order!
-                                  .billingAddress = data.addressList[index];
-                              Provider.of<AddressProvider>(context,
-                                      listen: false)
-                                  .addAddressToOrder(
-                                      data.addressList[index].id);
-                              pushNewScreen(context, screen: CheckoutPage());
-                            },
                           ),
                         ),
                       ),

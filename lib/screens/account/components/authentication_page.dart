@@ -1,4 +1,3 @@
-import 'package:ecommerce_flutter/screens/components/rounded_button.dart';
 import 'package:flutter/material.dart';
 import 'login_screen.dart';
 import 'register_screen.dart';
@@ -16,11 +15,11 @@ class AuthenticationPage extends StatelessWidget {
           title: Text(
             'Emre\'s E-Commerce',
             style: TextStyle(
-              color: Colors.black.withOpacity(0.3),
+              color: Color(0xFF8ECAE6),
             ),
           ),
           bottom: TabBar(
-            labelColor: Colors.lightBlueAccent,
+            labelColor: Color(0xFF8ECAE6),
             unselectedLabelColor: Colors.grey,
             tabs: [
               Tab(

@@ -20,6 +20,15 @@ class AddressProvider with ChangeNotifier {
     setIsLoading(false);
   }
 
+  Future<Address?> createAddress(Address address) async {
+    return await _orderApi.postAddresses(address);
+  }
+
+  void addAddress(Address address) {
+    this.addressList.add(address);
+    notifyListeners();
+  }
+
   void setAddressList(List<Address> addressList) {
     this.addressList = addressList;
     notifyListeners();

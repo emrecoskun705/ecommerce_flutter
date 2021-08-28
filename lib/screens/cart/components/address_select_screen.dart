@@ -91,7 +91,9 @@ class _AddressSelectScreenState extends State<AddressSelectScreen> {
       actions: [
         IconButton(
           onPressed: () {
-            pushNewScreen(context, screen: AddressFormScreen());
+            Navigator.pushReplacement(context,
+                MaterialPageRoute(builder: (_) => AddressFormScreen()));
+            // pushNewScreen(context, screen: AddressFormScreen());
           },
           icon: Icon(
             Icons.add,

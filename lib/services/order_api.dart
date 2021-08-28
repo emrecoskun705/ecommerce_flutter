@@ -114,7 +114,7 @@ class OrderApi {
     return addressList;
   }
 
-  Future<bool> postAddresses(Address address) async {
+  Future<Address?> postAddresses(Address address) async {
     var token = await UserTokenSecureStorage.getToken();
     var url = Uri.parse('$kServerApiURL/address/');
     http.Response response = await http.post(
@@ -132,10 +132,13 @@ class OrderApi {
     );
 
     if (response.statusCode == 201) {
-      return true;
+      dynamic data = jsonDecode(response.body);
+      address.id = data['id'].toInt();
+
+      return address;
     }
 
-    return false;
+    return null;
   }
 
   Future<String> fetchStripeURL() async {

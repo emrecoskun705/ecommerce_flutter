@@ -1,6 +1,7 @@
 import 'package:ecommerce_flutter/models/account_choice.dart';
 import 'package:ecommerce_flutter/providers/UserProvider.dart';
 import 'package:ecommerce_flutter/screens/account/account_page/components/my_favourite_screen.dart';
+import 'package:ecommerce_flutter/screens/account/account_page/components/my_orders_screen.dart';
 import 'package:ecommerce_flutter/size_config.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -19,7 +20,11 @@ class _AccountPageState extends State<AccountPage> {
   Widget build(BuildContext context) {
     List<AccountChoice> choices = [
       AccountChoice(
-          name: 'My Orders', icon: Icons.shopping_cart, function: () {}),
+          name: 'My Orders',
+          icon: Icons.shopping_cart,
+          function: () {
+            pushNewScreen(context, screen: MyOrdersScreen());
+          }),
       AccountChoice(
           name: 'My Favourites',
           icon: FontAwesomeIcons.heart,

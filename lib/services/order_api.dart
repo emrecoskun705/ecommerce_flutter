@@ -172,4 +172,40 @@ class OrderApi {
 
     return false;
   }
+
+  Future<List<OrderProduct>> fetchOrderProductList() async {
+    var token = await UserTokenSecureStorage.getToken();
+    var url = Uri.parse('$kServerApiURL/order-list-user/');
+
+    http.Response response = await http.get(
+      url,
+      headers: {
+        HttpHeaders.authorizationHeader: 'Token ${token.toString()}',
+      },
+    );
+    List<OrderProduct> orderProductList = [];
+    if (response.statusCode == 200) {
+      dynamic data = jsonDecode(response.body);
+      for (var order in data) {
+        for (var orderProduct in order['items']) {
+          var product = orderProduct['product'];
+          orderProductList.add(OrderProduct(
+            id: orderProduct['id'],
+            product: MinimalProduct(
+              id: product['id'],
+              title: product['title'],
+              image: product['image'],
+              price: product['price'],
+              discountPrice: product['discount_price'] == null
+                  ? 0.0
+                  : product['discount_price'],
+            ),
+            quantity: orderProduct['quantity'],
+          ));
+        }
+      }
+    }
+
+    return orderProductList;
+  }
 }

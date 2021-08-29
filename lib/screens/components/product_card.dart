@@ -63,11 +63,8 @@ class _ProductCardState extends State<ProductCard> {
                     decoration: BoxDecoration(
                         // color: Color(0xFF979797).withOpacity(0.1),
                         borderRadius: BorderRadius.circular(15)),
-                    child: Hero(
-                      tag: widget.product.id.toString(),
-                      child: Image.network(
-                        widget.product.image,
-                      ),
+                    child: Image.network(
+                      widget.product.image,
                     ),
                   ),
                 ),

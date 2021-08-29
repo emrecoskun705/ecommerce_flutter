@@ -53,20 +53,42 @@ class _MyFavouriteScreenState extends State<MyFavouriteScreen> {
                 ),
               );
             } else {
-              return Container(
-                padding: EdgeInsets.symmetric(
-                    horizontal: getProportionateScreenWidth(5)),
-                child: GridView.builder(
-                  gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                      crossAxisCount: 2,
-                      childAspectRatio: (itemWidth / itemHeight),
-                      // mainAxisExtent: 250,
-                      mainAxisSpacing: getProportionateScreenHeight(5)),
-                  itemCount: data.productList.length,
-                  itemBuilder: (context, index) {
-                    return ProductCard(product: data.productList[index]);
-                  },
-                ),
+              return Column(
+                children: [
+                  Container(
+                    width: double.infinity,
+                    color: Colors.grey.withOpacity(0.2),
+                    child: Padding(
+                      padding: EdgeInsets.symmetric(
+                          vertical: getProportionateScreenHeight(10),
+                          horizontal: 10),
+                      child: Text(
+                        'My Favourites',
+                        style: TextStyle(
+                          color: Colors.black.withOpacity(0.7),
+                          fontSize: getProportionateScreenHeight(30),
+                        ),
+                      ),
+                    ),
+                  ),
+                  Flexible(
+                    child: Container(
+                      padding: EdgeInsets.symmetric(
+                          horizontal: getProportionateScreenWidth(5)),
+                      child: GridView.builder(
+                        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                            crossAxisCount: 2,
+                            childAspectRatio: (itemWidth / itemHeight),
+                            // mainAxisExtent: 250,
+                            mainAxisSpacing: getProportionateScreenHeight(5)),
+                        itemCount: data.productList.length,
+                        itemBuilder: (context, index) {
+                          return ProductCard(product: data.productList[index]);
+                        },
+                      ),
+                    ),
+                  ),
+                ],
               );
             }
           },

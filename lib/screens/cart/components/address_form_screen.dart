@@ -135,7 +135,8 @@ class _AddressFormScreenState extends State<AddressFormScreen> {
                                     detail.text));
                             await AddressProvider()
                                 .addAddressToOrder(address!.id);
-                            pushNewScreen(context, screen: CheckoutPage());
+                            pushNewScreen(context,
+                                screen: CheckoutPage(), withNavBar: false);
                             setState(() {
                               _isLoading = false;
                             });

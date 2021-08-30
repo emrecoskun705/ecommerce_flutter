@@ -1,10 +1,8 @@
 import 'package:ecommerce_flutter/providers/UserProvider.dart';
-import 'package:ecommerce_flutter/providers/carousel_provider.dart';
 import 'package:ecommerce_flutter/screens/home/components/home_carousel.dart';
 import 'package:ecommerce_flutter/screens/search/search.dart';
 import 'package:ecommerce_flutter/screens/home/components/trend_products.dart';
 import 'package:flutter/material.dart';
-import 'package:getwidget/getwidget.dart' show GFCarousel;
 import 'package:provider/provider.dart';
 
 import '../../size_config.dart';
@@ -17,7 +15,6 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  CarouselProvider _carouselProvider = CarouselProvider();
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();

@@ -54,7 +54,8 @@ class _AddressSelectScreenState extends State<AddressSelectScreen> {
                                 .billingAddress = data.addressList[index];
                             Provider.of<AddressProvider>(context, listen: false)
                                 .addAddressToOrder(data.addressList[index].id);
-                            pushNewScreen(context, screen: CheckoutPage());
+                            pushNewScreen(context,
+                                screen: CheckoutPage(), withNavBar: false);
                           },
                           child: Padding(
                             padding: EdgeInsets.all(8.0),

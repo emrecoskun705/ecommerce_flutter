@@ -118,7 +118,8 @@ class _AddressFormScreenState extends State<AddressFormScreen> {
                       ),
                       SizedBox(height: getProportionateScreenHeight(20)),
                       RoundedButton(
-                        colour: Colors.lightBlueAccent,
+                        bgColor: Colors.lightBlueAccent,
+                        primaryColor: Colors.white,
                         title: 'Continue checkout',
                         onPressed: () async {
                           if (_formKey.currentState!.validate()) {

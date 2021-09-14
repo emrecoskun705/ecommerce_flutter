@@ -1,5 +1,7 @@
 import 'package:ecommerce_flutter/models/account_choice.dart';
+import 'package:ecommerce_flutter/models/cart/order.dart';
 import 'package:ecommerce_flutter/providers/UserProvider.dart';
+import 'package:ecommerce_flutter/providers/order_provider.dart';
 import 'package:ecommerce_flutter/screens/account/account_page/components/my_favourite_screen.dart';
 import 'package:ecommerce_flutter/screens/account/account_page/components/my_orders_screen.dart';
 import 'package:ecommerce_flutter/size_config.dart';
@@ -46,6 +48,8 @@ class _AccountPageState extends State<AccountPage> {
           icon: Icons.close,
           function: () async {
             await Provider.of<UserProvider>(context, listen: false).logout();
+            Provider.of<OrderProvider>(context, listen: false)
+                .setOrder(Order(productList: []));
           }),
     ];
 

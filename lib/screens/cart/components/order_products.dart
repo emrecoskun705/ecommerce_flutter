@@ -17,62 +17,47 @@ class OrderProducts extends StatefulWidget {
 
 class _OrderProductsState extends State<OrderProducts> {
   @override
-  void initState() {
-    super.initState();
-    WidgetsBinding.instance!.addPostFrameCallback((timeStamp) {
-      Provider.of<OrderProvider>(context, listen: false).fetchOrder();
-    });
-  }
-
-  @override
   Widget build(BuildContext context) {
-    return context.watch<OrderProvider>().isLoading
-        ? Container(
-            child: ModalProgressHUD(
-              inAsyncCall: true,
-              child: Container(),
-            ),
-          )
-        : Padding(
-            padding: EdgeInsets.symmetric(
-                horizontal: getProportionateScreenWidth(20)),
-            child: Consumer<OrderProvider>(
-              builder: (context, data, _) {
-                var order = data.order;
-                return ListView.builder(
-                  itemCount: order!.productList.length,
-                  itemBuilder: (context, index) {
-                    OrderProduct orderProduct = order.productList[index];
-                    return Padding(
-                      padding: EdgeInsets.symmetric(vertical: 10),
-                      child: Dismissible(
-                        key: Key(orderProduct.product.id.toString()),
-                        direction: DismissDirection.endToStart,
-                        onDismissed: (direction) {
-                          data.deleteOrderProduct(orderProduct);
-                        },
-                        background: Container(
-                          padding: EdgeInsets.symmetric(horizontal: 20),
-                          decoration: BoxDecoration(
-                            color: Color(0xFFFFE6E6),
-                            borderRadius: BorderRadius.circular(15),
-                          ),
-                          child: Row(
-                            children: [
-                              Spacer(),
-                              SvgPicture.asset("assets/icons/Trash.svg"),
-                            ],
-                          ),
-                        ),
-                        child: CartProductCard(
-                          orderProduct: orderProduct,
-                        ),
-                      ),
-                    );
+    return Padding(
+      padding:
+          EdgeInsets.symmetric(horizontal: getProportionateScreenWidth(20)),
+      child: Consumer<OrderProvider>(
+        builder: (context, data, _) {
+          var order = data.order;
+          return ListView.builder(
+            itemCount: order.productList.length,
+            itemBuilder: (context, index) {
+              OrderProduct orderProduct = order.productList[index];
+              return Padding(
+                padding: EdgeInsets.symmetric(vertical: 10),
+                child: Dismissible(
+                  key: Key(orderProduct.product.id.toString()),
+                  direction: DismissDirection.endToStart,
+                  onDismissed: (direction) {
+                    data.deleteOrderProduct(orderProduct);
                   },
-                );
-              },
-            ),
+                  background: Container(
+                    padding: EdgeInsets.symmetric(horizontal: 20),
+                    decoration: BoxDecoration(
+                      color: Color(0xFFFFE6E6),
+                      borderRadius: BorderRadius.circular(15),
+                    ),
+                    child: Row(
+                      children: [
+                        Spacer(),
+                        SvgPicture.asset("assets/icons/Trash.svg"),
+                      ],
+                    ),
+                  ),
+                  child: CartProductCard(
+                    orderProduct: orderProduct,
+                  ),
+                ),
+              );
+            },
           );
+        },
+      ),
+    );
   }
 }

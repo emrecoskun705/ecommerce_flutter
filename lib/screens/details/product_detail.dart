@@ -1,9 +1,9 @@
+import 'package:ecommerce_flutter/constants.dart';
 import 'package:ecommerce_flutter/models/minimal_product.dart';
 import 'package:ecommerce_flutter/providers/UserProvider.dart';
 import 'package:ecommerce_flutter/providers/order_provider.dart';
 import 'package:ecommerce_flutter/providers/persistent_tab_provider.dart';
 import 'package:ecommerce_flutter/providers/product/product_provider.dart';
-import 'package:ecommerce_flutter/screens/cart/components/cart_page.dart';
 import 'package:ecommerce_flutter/screens/components/rounded_button.dart';
 import 'package:ecommerce_flutter/screens/details/components/product_description.dart';
 import 'package:ecommerce_flutter/screens/details/components/product_image_carousel.dart';
@@ -11,7 +11,6 @@ import 'package:ecommerce_flutter/size_config.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:modal_progress_hud_nsn/modal_progress_hud_nsn.dart';
-import 'package:persistent_bottom_nav_bar/persistent-tab-view.dart';
 import 'package:provider/provider.dart';
 
 class ProductDetail extends StatefulWidget {
@@ -99,35 +98,37 @@ class _ProductDetailState extends State<ProductDetail> {
                         discountPrice: data.product!.discountPrice,
                         description: data.product!.description,
                       ),
-                      RoundedButton(
-                        colour: Colors.lightBlueAccent,
-                        title: 'Add to cart',
-                        onPressed: () async {
-                          // if user is not logged in redirect to account screen for authentication
-                          // otherwise add product to cart
-                          if (!Provider.of<UserProvider>(context, listen: false)
-                              .isLoggedIn) {
-                            Provider.of<PersistentTabProvider>(context,
+                      Padding(
+                        padding: kButtonDefaultEdgeInsets(),
+                        child: RoundedButton(
+                          primaryColor: Colors.white,
+                          bgColor: Colors.lightBlueAccent,
+                          title: 'Add to cart',
+                          onPressed: () async {
+                            // if user is not logged in redirect to account screen for authentication
+                            // otherwise add product to cart
+                            if (!Provider.of<UserProvider>(context,
                                     listen: false)
-                                .changeTab(3);
-                          } else {
-                            await Provider.of<OrderProvider>(context,
-                                    listen: false)
-                                .postOrderProduct(MinimalProduct(
-                                    id: data.product!.id,
-                                    title: data.product!.title,
-                                    image: data.product!.images[0],
-                                    price: data.product!.price,
-                                    discountPrice:
-                                        data.product!.discountPrice));
-                            pushNewScreen(
-                              context,
-                              screen: CartPage(),
-                              pageTransitionAnimation:
-                                  PageTransitionAnimation.slideUp,
-                            );
-                          }
-                        },
+                                .isLoggedIn) {
+                              Provider.of<PersistentTabProvider>(context,
+                                      listen: false)
+                                  .changeTab(3);
+                            } else {
+                              await Provider.of<OrderProvider>(context,
+                                      listen: false)
+                                  .postOrderProduct(MinimalProduct(
+                                      id: data.product!.id,
+                                      title: data.product!.title,
+                                      image: data.product!.images[0],
+                                      price: data.product!.price,
+                                      discountPrice:
+                                          data.product!.discountPrice));
+                              Provider.of<PersistentTabProvider>(context,
+                                      listen: false)
+                                  .changeTab(2);
+                            }
+                          },
+                        ),
                       )
                     ],
                   ),

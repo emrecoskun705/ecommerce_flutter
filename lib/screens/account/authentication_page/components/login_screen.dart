@@ -1,5 +1,7 @@
 import 'package:ecommerce_flutter/providers/persistent_tab_provider.dart';
 import 'package:ecommerce_flutter/providers/UserProvider.dart';
+import 'package:ecommerce_flutter/size_config.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:ecommerce_flutter/constants.dart';
 import 'package:ecommerce_flutter/screens/components/rounded_button.dart';
@@ -41,14 +43,8 @@ class _LoginScreenState extends State<LoginScreen> {
             child: Padding(
               padding: EdgeInsets.symmetric(vertical: 16.0, horizontal: 30.0),
               child: Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
-                  Text(
-                    'Log In',
-                    style: TextStyle(
-                        fontWeight: FontWeight.bold,
-                        fontSize: 25.0,
-                        color: Color(0xFFFB8500)),
-                  ),
                   SizedBox(height: 20.0),
                   TextFormField(
                     controller: emailController,
@@ -90,14 +86,19 @@ class _LoginScreenState extends State<LoginScreen> {
                   SizedBox(
                     height: 20.0,
                   ),
-                  RoundedButton(
-                    colour: Color(0xFFFFB703),
-                    title: 'Log In',
-                    onPressed: () {
-                      if (_formKey.currentState!.validate()) {
-                        _login();
-                      }
-                    },
+                  Padding(
+                    padding: EdgeInsets.symmetric(
+                        horizontal: getProportionateScreenWidth(15)),
+                    child: RoundedButton(
+                      primaryColor: Colors.white,
+                      bgColor: Colors.lightBlueAccent,
+                      title: 'Log In',
+                      onPressed: () {
+                        if (_formKey.currentState!.validate()) {
+                          _login();
+                        }
+                      },
+                    ),
                   ),
                 ],
               ),

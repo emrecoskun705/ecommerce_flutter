@@ -47,10 +47,10 @@ class _AddressSelectScreenState extends State<AddressSelectScreen> {
                         child: InkWell(
                           onTap: () {
                             Provider.of<OrderProvider>(context, listen: false)
-                                .order!
+                                .order
                                 .shippingAddress = data.addressList[index];
                             Provider.of<OrderProvider>(context, listen: false)
-                                .order!
+                                .order
                                 .billingAddress = data.addressList[index];
                             Provider.of<AddressProvider>(context, listen: false)
                                 .addAddressToOrder(data.addressList[index].id);

@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:ecommerce_flutter/constants.dart';
 import 'package:ecommerce_flutter/screens/components/rounded_button.dart';
 import 'package:provider/provider.dart';
+import 'package:ecommerce_flutter/size_config.dart';
 
 class RegisterScreen extends StatefulWidget {
   @override
@@ -38,14 +39,8 @@ class _RegisterScreenState extends State<RegisterScreen> {
           child: Form(
             key: _formKey,
             child: Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
-                Text(
-                  'Register',
-                  style: TextStyle(
-                      fontWeight: FontWeight.bold,
-                      fontSize: 25.0,
-                      color: Color(0xFFFB8500)),
-                ),
                 SizedBox(height: 20.0),
                 TextFormField(
                   controller: email,
@@ -108,14 +103,19 @@ class _RegisterScreenState extends State<RegisterScreen> {
                 SizedBox(
                   height: 20.0,
                 ),
-                RoundedButton(
-                  colour: Color(0xFFFFB703),
-                  title: 'Register',
-                  onPressed: () {
-                    if (_formKey.currentState!.validate()) {
-                      _register();
-                    }
-                  },
+                Padding(
+                  padding: EdgeInsets.symmetric(
+                      horizontal: getProportionateScreenWidth(15)),
+                  child: RoundedButton(
+                    primaryColor: Colors.white,
+                    bgColor: Colors.lightBlueAccent,
+                    title: 'Register',
+                    onPressed: () {
+                      if (_formKey.currentState!.validate()) {
+                        _register();
+                      }
+                    },
+                  ),
                 )
               ],
             ),

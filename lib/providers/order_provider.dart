@@ -6,8 +6,9 @@ import 'package:ecommerce_flutter/services/order_api.dart';
 import 'package:flutter/cupertino.dart';
 
 class OrderProvider extends ChangeNotifier {
-  Order? order;
+  Order order = Order(productList: []);
   bool isLoading = true;
+  bool isEmpty = true;
 
   final OrderApi orderApi = OrderApi();
 
@@ -23,9 +24,9 @@ class OrderProvider extends ChangeNotifier {
     bool success = await orderApi.changeQuantity(orderProductId, newQuantity);
     if (success) {
       int i = 0;
-      for (var orderProduct in order!.productList) {
+      for (var orderProduct in order.productList) {
         if (orderProduct.id == orderProductId) {
-          order!.productList[i].quantity = newQuantity;
+          order.productList[i].quantity = newQuantity;
           notifyListeners();
           break;
         }
@@ -60,22 +61,22 @@ class OrderProvider extends ChangeNotifier {
   }
 
   void setShippingAddress(Address address) {
-    order!.shippingAddress = address;
+    order.shippingAddress = address;
     notifyListeners();
   }
 
   void setBillingAddress(Address address) {
-    order!.billingAddress = address;
+    order.billingAddress = address;
     notifyListeners();
   }
 
   void removeOrderProduct(OrderProduct orderProduct) {
-    order!.productList.remove(orderProduct);
+    order.productList.remove(orderProduct);
     notifyListeners();
   }
 
   void addOrderProduct(OrderProduct orderProduct) {
-    order!.productList.add(orderProduct);
+    order.productList.add(orderProduct);
     notifyListeners();
   }
 
@@ -91,7 +92,7 @@ class OrderProvider extends ChangeNotifier {
 
   double getTotal() {
     double total = 0;
-    for (var orderProduct in order!.productList) {
+    for (var orderProduct in order.productList) {
       if (orderProduct.product.discountPrice == 0.0) {
         total += orderProduct.quantity * orderProduct.product.price;
       } else {

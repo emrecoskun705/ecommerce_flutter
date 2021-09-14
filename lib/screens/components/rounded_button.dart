@@ -1,33 +1,33 @@
 import 'package:flutter/material.dart';
 
 class RoundedButton extends StatelessWidget {
-  final Color colour;
+  final Color primaryColor;
+  final Color bgColor;
   final String title;
   final VoidCallback onPressed;
 
   RoundedButton(
-      {required this.colour, required this.title, required this.onPressed});
+      {required this.primaryColor,
+      required this.title,
+      required this.onPressed,
+      required this.bgColor});
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: EdgeInsets.symmetric(vertical: 16.0),
-      child: Material(
-        elevation: 5.0,
-        color: colour, //
-        borderRadius: BorderRadius.circular(30.0),
-        child: MaterialButton(
-          onPressed: onPressed,
-          minWidth: 200.0,
-          height: 42.0,
-          child: Text(
-            title,
-            style: TextStyle(
-              color: Colors.white,
-            ),
+    return TextButton(
+      style: TextButton.styleFrom(
+        backgroundColor: this.bgColor,
+        primary: this.primaryColor,
+        padding: EdgeInsets.symmetric(vertical: 15, horizontal: 30),
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.all(
+            Radius.circular(5),
           ),
         ),
       ),
+      onPressed: this.onPressed,
+      child: Text(this.title),
     );
+    ;
   }
 }

@@ -1,4 +1,6 @@
 import 'package:ecommerce_flutter/providers/UserProvider.dart';
+import 'package:ecommerce_flutter/size_config.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -20,3 +22,9 @@ const kAccountInputDecoration = InputDecoration(
   //   borderRadius: BorderRadius.all(Radius.circular(16.0)),
   // ),
 );
+
+EdgeInsets kButtonDefaultEdgeInsets() {
+  return EdgeInsets.symmetric(
+      vertical: getProportionateScreenHeight(30),
+      horizontal: getProportionateScreenWidth(50));
+}

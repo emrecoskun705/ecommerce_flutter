@@ -18,36 +18,23 @@ class CartScreen extends StatefulWidget {
 
 class _CartScreenState extends State<CartScreen> {
   @override
-  void initState() {
-    super.initState();
-    WidgetsBinding.instance!.addPostFrameCallback((timeStamp) {
-      Provider.of<OrderProvider>(context, listen: false).fetchOrder();
-    });
-  }
-
-  @override
   Widget build(BuildContext context) {
     // if user is not logged in show empty cart
     // if user does not have any items in it's cart, show empty cart
     // if user is logged in and has product in it's car, show cart
     return context.watch<UserProvider>().isLoggedIn
-        ? context.watch<OrderProvider>().isLoading
-            ? Container(
-                child: ModalProgressHUD(
-                  inAsyncCall: true,
-                  child: Container(),
+        ? (Provider.of<OrderProvider>(context).order.productList.length == 0
+            ? EmptyCartScreen()
+            : ModalProgressHUD(
+                inAsyncCall: context.watch<OrderProvider>().isLoading,
+                child: Scaffold(
+                  appBar: buildAppBar(context),
+                  body: OrderProducts(),
+                  bottomNavigationBar: context.watch<OrderProvider>().isLoading
+                      ? SizedBox()
+                      : buildBottomNavbar(context),
                 ),
-              )
-            : (Provider.of<OrderProvider>(context).order.productList.length == 0
-                ? EmptyCartScreen()
-                : Scaffold(
-                    appBar: buildAppBar(context),
-                    body: OrderProducts(),
-                    bottomNavigationBar:
-                        context.watch<OrderProvider>().isLoading
-                            ? SizedBox()
-                            : buildBottomNavbar(context),
-                  ))
+              ))
         : EmptyCartScreen();
   }
 
@@ -80,20 +67,27 @@ class _CartScreenState extends State<CartScreen> {
                     ),
                   ],
                 ),
-                RoundedButton(
-                  bgColor: Colors.lightBlueAccent,
-                  primaryColor: Colors.white,
-                  title: 'Buy',
-                  onPressed: () {
-                    if (Provider.of<UserProvider>(context, listen: false)
-                        .isLoggedIn) {
-                      pushNewScreen(context, screen: AddressSelectScreen());
-                    } else {
-                      Provider.of<PersistentTabProvider>(context, listen: false)
-                          .changeTab(3);
-                      Navigator.pop(context);
-                    }
-                  },
+                Expanded(
+                  child: Padding(
+                    padding:
+                        EdgeInsets.only(left: getProportionateScreenWidth(50)),
+                    child: RoundedButton(
+                      bgColor: Colors.lightBlueAccent,
+                      primaryColor: Colors.white,
+                      title: 'Buy',
+                      onPressed: () {
+                        if (Provider.of<UserProvider>(context, listen: false)
+                            .isLoggedIn) {
+                          pushNewScreen(context, screen: AddressSelectScreen());
+                        } else {
+                          Provider.of<PersistentTabProvider>(context,
+                                  listen: false)
+                              .changeTab(3);
+                          Navigator.pop(context);
+                        }
+                      },
+                    ),
+                  ),
                 )
               ],
             ),

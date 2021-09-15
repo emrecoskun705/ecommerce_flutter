@@ -9,8 +9,6 @@ import 'package:provider/provider.dart';
 import '../../../size_config.dart';
 
 class OrderProducts extends StatefulWidget {
-  const OrderProducts({Key? key}) : super(key: key);
-
   @override
   _OrderProductsState createState() => _OrderProductsState();
 }

@@ -1,3 +1,4 @@
+import 'package:ecommerce_flutter/providers/UserProvider.dart';
 import 'package:ecommerce_flutter/providers/order_provider.dart';
 import 'package:ecommerce_flutter/providers/persistent_tab_provider.dart';
 import 'package:ecommerce_flutter/screens/account/account_screen.dart';
@@ -47,7 +48,10 @@ class _MainScreenState extends State<MainScreen> {
         activeColorPrimary: Colors.blue,
         inactiveColorPrimary: Colors.grey,
         onPressed: (_) {
-          Provider.of<OrderProvider>(context, listen: false).fetchOrder();
+          // if user is not logged in no need to check if there is an order
+          if (context.read<UserProvider>().isLoggedIn) {
+            Provider.of<OrderProvider>(context, listen: false).fetchOrder();
+          }
           Provider.of<PersistentTabProvider>(context, listen: false)
               .changeTab(2);
         },

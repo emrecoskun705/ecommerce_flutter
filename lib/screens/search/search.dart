@@ -1,112 +1,46 @@
+import 'package:ecommerce_flutter/screens/components/search_bar.dart';
+import 'package:ecommerce_flutter/size_config.dart';
 import 'package:flutter/material.dart';
-import 'components/product_list_result.dart';
 
-class SearchBar extends SearchDelegate<String?> {
-  //TODO: delete after handle api
-  final example1 = [
-    'example1',
-    'example2',
-    'example3',
-  ];
-//TODO: delete after handle api
-  final example2 = [
-    'example4',
-    'example5',
-    'example6',
-  ];
+class SearchScreen extends StatelessWidget {
+  static TextEditingController _controller = TextEditingController();
 
   @override
-  List<Widget> buildActions(BuildContext context) {
-    return [
-      IconButton(
-        icon: Icon(Icons.clear),
-        onPressed: () {
-          if (query.isEmpty) {
-            close(context, null);
-          } else {
-            query = '';
-            showSuggestions(context);
-          }
-        },
-      )
-    ];
-  }
-
-  @override
-  Widget buildLeading(BuildContext context) {
-    return IconButton(
-      onPressed: () => close(context, null),
-      icon: Icon(Icons.arrow_back),
-    );
-  }
-
-  // this part activates when user, search is completed
-  // and lists the products for given query
-  @override
-  Widget buildResults(BuildContext context) {
-    return ProductListPage(
-      query: query,
-    );
-  }
-
-  @override
-  Widget buildSuggestions(BuildContext context) {
-    //TODO: Update suggestion
-    final suggestions = query.isEmpty
-        ? example2
-        : example1.where((element) {
-            final elementLower = element.toLowerCase();
-            final queryLower = query.toLowerCase();
-
-            return elementLower.startsWith(queryLower);
-          }).toList();
-    return buildSuggestionsSuccess(suggestions);
-  }
-
-  Widget buildSuggestionsSuccess(List<String> suggestions) {
-    return ListView.builder(
-        itemCount: suggestions.length,
-        itemBuilder: (context, index) {
-          final suggestion = suggestions[index];
-          final queryText = suggestion.substring(0, query.length);
-          final remainingText = suggestion.substring(query.length);
-
-          return ListTile(
-            onTap: () {
-              query = suggestion;
-
-              //1. Show Results
-              showResults(context);
-
-              //TODO: 2. Close Search & Return Result
-              // close(context, suggestion);
-
-              // TODO: 3. Navigate to Result Page
-              //  Navigator.push(
-              //   context,
-              //   MaterialPageRoute(
-              //     builder: (BuildContext context) => ResultPage(suggestion),
-              //   ),
-              // );
-            },
-            leading: Icon(Icons.search),
-            title: RichText(
-              text: TextSpan(
-                  text: queryText,
-                  style: TextStyle(
-                      color: Colors.black,
-                      fontSize: 18,
-                      fontWeight: FontWeight.bold),
-                  children: [
-                    TextSpan(
-                        text: remainingText,
-                        style: TextStyle(
-                          color: Colors.grey,
-                          fontSize: 18,
-                        )),
-                  ]),
+  Widget build(BuildContext context) {
+    return Scaffold(
+      body: SafeArea(
+        child: Column(
+          children: [
+            Padding(
+              padding: EdgeInsets.symmetric(
+                  vertical: getProportionateScreenHeight(10),
+                  horizontal: getProportionateScreenWidth(15)),
+              child: Row(
+                children: [
+                  Flexible(
+                    child: Hero(
+                      tag: 'searchBarTag',
+                      child: SearchBar(
+                        enabled: true,
+                        controller: _controller,
+                      ),
+                    ),
+                  ),
+                  SizedBox(width: 10),
+                  InkWell(
+                      borderRadius: BorderRadius.circular(10),
+                      onTap: () {
+                        Navigator.pop(context);
+                      },
+                      child: Text(
+                        'Cancel',
+                      )),
+                ],
+              ),
             ),
-          );
-        });
+          ],
+        ),
+      ),
+    );
   }
 }

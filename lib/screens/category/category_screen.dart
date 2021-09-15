@@ -1,10 +1,13 @@
 import 'package:ecommerce_flutter/providers/category_provider.dart';
 import 'package:ecommerce_flutter/screens/category/components/category_list.dart';
 import 'package:ecommerce_flutter/screens/category/components/product_list_category.dart';
+import 'package:ecommerce_flutter/screens/components/search_bar.dart';
 import 'package:ecommerce_flutter/screens/search/search.dart';
 import 'package:flutter/material.dart';
 import 'package:modal_progress_hud_nsn/modal_progress_hud_nsn.dart';
+import 'package:persistent_bottom_nav_bar/persistent-tab-view.dart';
 import 'package:provider/provider.dart';
+import 'package:ecommerce_flutter/size_config.dart';
 
 class CategoryScreen extends StatefulWidget {
   final String slug;
@@ -15,7 +18,9 @@ class CategoryScreen extends StatefulWidget {
   _CategoryScreenState createState() => _CategoryScreenState();
 }
 
-class _CategoryScreenState extends State<CategoryScreen> {
+class _CategoryScreenState extends State<CategoryScreen>
+    with SingleTickerProviderStateMixin {
+  static TextEditingController _controller = TextEditingController();
   CategoryProvider categoryProvider = CategoryProvider();
 
   @override
@@ -27,59 +32,75 @@ class _CategoryScreenState extends State<CategoryScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: buildAppBar(context),
-      body: ChangeNotifierProvider.value(
-        value: categoryProvider,
-        child: Consumer<CategoryProvider>(
-          builder: (context, data, _) {
-            if (data.isLoading) {
-              return Container(
-                child: ModalProgressHUD(
-                  inAsyncCall: true,
-                  child: Container(),
+      body: SafeArea(
+        child: NestedScrollView(
+          headerSliverBuilder: (context, bool innerBoxIsScrolled) {
+            return [
+              SliverAppBar(
+                forceElevated: innerBoxIsScrolled,
+                floating: true,
+                title: Center(
+                  child: Text(
+                    'Emre\'s E-Commerce',
+                    style: TextStyle(
+                      color: Color(0xFF8ECAE6),
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
                 ),
-              );
-            } else {
-              // show product list
-              if (data.categoryList!.length <= 1 || widget.showAll) {
-                return ProductListCategory(categorySlug: widget.slug);
-              }
-
-              // show category list
-              return CategoryList(widget, data);
-            }
+                elevation: 0,
+                backgroundColor: Colors.white,
+              )
+            ];
           },
-        ),
-      ),
-    );
-  }
+          body: Column(
+            children: [
+              GestureDetector(
+                onTap: () {
+                  // showSearch(context: context, delegate: SearchScreen());
+                  pushNewScreen(context,
+                      screen: SearchScreen(),
+                      pageTransitionAnimation: PageTransitionAnimation.fade);
+                },
+                child: Padding(
+                  padding: EdgeInsets.symmetric(
+                      horizontal: getProportionateScreenWidth(20),
+                      vertical: getProportionateScreenHeight(10)),
+                  child: Hero(
+                      tag: 'searchBarTag',
+                      child:
+                          SearchBar(enabled: false, controller: _controller)),
+                ),
+              ),
+              Flexible(
+                child: ChangeNotifierProvider.value(
+                  value: categoryProvider,
+                  child: Consumer<CategoryProvider>(
+                    builder: (context, data, _) {
+                      if (data.isLoading) {
+                        return Container(
+                          child: ModalProgressHUD(
+                            inAsyncCall: true,
+                            child: Container(),
+                          ),
+                        );
+                      } else {
+                        // show product list
+                        if (data.categoryList!.length <= 1 || widget.showAll) {
+                          return ProductListCategory(categorySlug: widget.slug);
+                        }
 
-  AppBar buildAppBar(BuildContext context) {
-    return AppBar(
-      title: Center(
-        child: Text(
-          'Emre\'s E-Commerce',
-          style: TextStyle(
-            color: Color(0xFF8ECAE6),
-            fontWeight: FontWeight.bold,
+                        // show category list
+                        return CategoryList(widget, data);
+                      }
+                    },
+                  ),
+                ),
+              ),
+            ],
           ),
         ),
       ),
-      actions: [
-        IconButton(
-          padding: EdgeInsets.only(right: 10.0),
-          onPressed: () async {
-            showSearch(context: context, delegate: SearchBar());
-          },
-          icon: Icon(
-            Icons.search,
-            size: 40.0,
-            color: Colors.grey,
-          ),
-        ),
-      ],
-      elevation: 10,
-      backgroundColor: Colors.white,
     );
   }
 }

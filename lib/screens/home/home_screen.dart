@@ -1,8 +1,10 @@
 import 'package:ecommerce_flutter/providers/UserProvider.dart';
+import 'package:ecommerce_flutter/screens/components/search_bar.dart';
 import 'package:ecommerce_flutter/screens/home/components/home_carousel.dart';
-import 'package:ecommerce_flutter/screens/search/search.dart';
 import 'package:ecommerce_flutter/screens/home/components/trend_products.dart';
+import 'package:ecommerce_flutter/screens/search/search.dart';
 import 'package:flutter/material.dart';
+import 'package:persistent_bottom_nav_bar/persistent-tab-view.dart';
 import 'package:provider/provider.dart';
 
 import '../../size_config.dart';
@@ -14,7 +16,9 @@ class HomeScreen extends StatefulWidget {
   _HomeScreenState createState() => _HomeScreenState();
 }
 
-class _HomeScreenState extends State<HomeScreen> {
+class _HomeScreenState extends State<HomeScreen>
+    with SingleTickerProviderStateMixin {
+  static TextEditingController _controller = TextEditingController();
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
@@ -25,45 +29,63 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     var _spacer = SizedBox(height: getProportionateScreenHeight(20.0));
-    return Scaffold(
-      appBar: buildAppBar(context),
-      body: ListView(
-        children: [
-          _spacer,
-          HomeCarousel(),
-          _spacer,
-          TrendProducts(),
-        ],
-      ),
-    );
-  }
 
-  AppBar buildAppBar(BuildContext context) {
-    return AppBar(
-      title: Center(
-        child: Text(
-          'Emre\'s E-Commerce',
-          style: TextStyle(
-            color: Color(0xFF8ECAE6),
-            fontWeight: FontWeight.bold,
+    return Scaffold(
+      body: SafeArea(
+        child: NestedScrollView(
+          headerSliverBuilder: (context, bool innerBoxIsScrolled) {
+            return [
+              SliverAppBar(
+                forceElevated: innerBoxIsScrolled,
+                floating: true,
+                title: Center(
+                  child: Text(
+                    'Emre\'s E-Commerce',
+                    style: TextStyle(
+                      color: Color(0xFF8ECAE6),
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                ),
+                elevation: 0,
+                backgroundColor: Colors.white,
+              )
+            ];
+          },
+          body: Column(
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: [
+              GestureDetector(
+                onTap: () {
+                  // showSearch(context: context, delegate: SearchScreen());
+                  pushNewScreen(context,
+                      screen: SearchScreen(),
+                      pageTransitionAnimation: PageTransitionAnimation.fade);
+                },
+                child: Padding(
+                  padding: EdgeInsets.symmetric(
+                      horizontal: getProportionateScreenWidth(20),
+                      vertical: getProportionateScreenHeight(10)),
+                  child: Hero(
+                      tag: 'searchBarTag',
+                      child:
+                          SearchBar(enabled: false, controller: _controller)),
+                ),
+              ),
+              Flexible(
+                child: ListView(
+                  children: [
+                    _spacer,
+                    HomeCarousel(),
+                    _spacer,
+                    TrendProducts(),
+                  ],
+                ),
+              ),
+            ],
           ),
         ),
       ),
-      actions: [
-        IconButton(
-          padding: EdgeInsets.only(right: 10.0),
-          onPressed: () async {
-            showSearch(context: context, delegate: SearchBar());
-          },
-          icon: Icon(
-            Icons.search,
-            size: 40.0,
-            color: Colors.grey,
-          ),
-        ),
-      ],
-      elevation: 10,
-      backgroundColor: Colors.white,
     );
   }
 }

@@ -38,10 +38,10 @@ class _ProductListPageState extends State<ProductListPage> {
     /*24 is for notification bar on Android*/
     final double itemHeight = (size.height - kToolbarHeight - 24) / 2;
     final double itemWidth = size.width / 2;
-    return Container(
-      padding: EdgeInsets.symmetric(horizontal: getProportionateScreenWidth(5)),
-      color: Colors.grey.withOpacity(0.1),
-      child: _buildList(itemHeight, itemWidth),
+    return Scaffold(
+      body: SafeArea(
+        child: _buildList(itemHeight, itemWidth),
+      ),
     );
   }
 

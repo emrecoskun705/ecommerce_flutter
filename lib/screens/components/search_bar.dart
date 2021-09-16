@@ -38,6 +38,7 @@ class _SearchBarState extends State<SearchBar> {
               ));
         },
         enabled: widget.enabled,
+        autofocus: widget.enabled,
         decoration: InputDecoration(
           prefixIcon: Icon(
             Icons.search,

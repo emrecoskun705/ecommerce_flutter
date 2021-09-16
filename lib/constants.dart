@@ -9,6 +9,8 @@ const kServerApiURL = '$kServerURL/api';
 const kSearchBarTag = 'searchBarTag';
 const kSearchBarCategoryTag = 'searchBarCategoryTag';
 
+const kWhiteColor = Color(0xFFFAFAFA);
+
 const kAccountInputDecoration = InputDecoration(
   hintStyle: TextStyle(
     color: Colors.grey,

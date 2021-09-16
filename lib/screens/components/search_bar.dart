@@ -23,9 +23,6 @@ class _SearchBarState extends State<SearchBar> {
       elevation: 4,
       borderRadius: BorderRadius.circular(20),
       child: TextField(
-        style: TextStyle(
-          fontSize: getProportionateScreenHeight(20),
-        ),
         controller: this.widget.controller,
         onChanged: (val) {
           setState(() {
@@ -40,7 +37,6 @@ class _SearchBarState extends State<SearchBar> {
                 query: value,
               ));
         },
-        autofocus: widget.enabled,
         enabled: widget.enabled,
         decoration: InputDecoration(
           prefixIcon: Icon(
@@ -62,7 +58,7 @@ class _SearchBarState extends State<SearchBar> {
                   },
                 )
               : null,
-          hintText: 'Search for product or category',
+          hintText: 'Search product',
           filled: true,
           fillColor: Colors.white,
           isDense: true,

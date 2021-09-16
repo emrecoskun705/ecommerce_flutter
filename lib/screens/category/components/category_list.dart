@@ -34,7 +34,8 @@ class CategoryList extends StatelessWidget {
                     screen: CategoryScreen(
                       slug: category.slug,
                       showAll: category.slug == widget.slug,
-                    ));
+                    ),
+                    pageTransitionAnimation: PageTransitionAnimation.fade);
               },
               child: Card(
                 margin: EdgeInsets.all(0),

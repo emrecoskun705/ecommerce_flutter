@@ -6,8 +6,9 @@ import 'package:ecommerce_flutter/screens/search/search.dart';
 import 'package:flutter/material.dart';
 import 'package:persistent_bottom_nav_bar/persistent-tab-view.dart';
 import 'package:provider/provider.dart';
+import 'package:ecommerce_flutter/constants.dart';
 
-import '../../size_config.dart';
+import 'package:ecommerce_flutter/size_config.dart';
 
 class HomeScreen extends StatefulWidget {
   static const id = '/';
@@ -55,21 +56,21 @@ class _HomeScreenState extends State<HomeScreen>
           body: Column(
             mainAxisAlignment: MainAxisAlignment.start,
             children: [
-              GestureDetector(
-                onTap: () {
-                  // showSearch(context: context, delegate: SearchScreen());
-                  pushNewScreen(context,
-                      screen: SearchScreen(),
-                      pageTransitionAnimation: PageTransitionAnimation.fade);
-                },
-                child: Padding(
-                  padding: EdgeInsets.symmetric(
-                      horizontal: getProportionateScreenWidth(20),
-                      vertical: getProportionateScreenHeight(10)),
-                  child: Hero(
-                      tag: 'searchBarTag',
-                      child:
-                          SearchBar(enabled: false, controller: _controller)),
+              Hero(
+                tag: kSearchBarTag,
+                child: GestureDetector(
+                  onTap: () {
+                    pushNewScreen(context,
+                        screen: SearchScreen(),
+                        pageTransitionAnimation:
+                            PageTransitionAnimation.slideUp);
+                  },
+                  child: Padding(
+                    padding: EdgeInsets.symmetric(
+                        horizontal: getProportionateScreenWidth(20),
+                        vertical: getProportionateScreenHeight(10)),
+                    child: SearchBar(enabled: false, controller: _controller),
+                  ),
                 ),
               ),
               Flexible(

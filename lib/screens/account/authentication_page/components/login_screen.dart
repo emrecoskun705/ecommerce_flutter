@@ -1,10 +1,12 @@
 import 'package:ecommerce_flutter/providers/persistent_tab_provider.dart';
 import 'package:ecommerce_flutter/providers/UserProvider.dart';
+import 'package:ecommerce_flutter/screens/account/authentication_page/components/google_login.dart';
 import 'package:ecommerce_flutter/size_config.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:ecommerce_flutter/constants.dart';
 import 'package:ecommerce_flutter/screens/components/rounded_button.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:modal_progress_hud_nsn/modal_progress_hud_nsn.dart';
 import 'package:provider/provider.dart';
 
@@ -100,6 +102,7 @@ class _LoginScreenState extends State<LoginScreen> {
                       },
                     ),
                   ),
+                  GoogleLogin(),
                 ],
               ),
             ),

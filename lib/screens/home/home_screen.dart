@@ -3,7 +3,9 @@ import 'package:ecommerce_flutter/screens/components/search_bar.dart';
 import 'package:ecommerce_flutter/screens/home/components/home_carousel.dart';
 import 'package:ecommerce_flutter/screens/home/components/trend_products.dart';
 import 'package:ecommerce_flutter/screens/search/search.dart';
+import 'package:ecommerce_flutter/services/google_signin_api.dart';
 import 'package:flutter/material.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 import 'package:persistent_bottom_nav_bar/persistent-tab-view.dart';
 import 'package:provider/provider.dart';
 import 'package:ecommerce_flutter/constants.dart';
@@ -20,6 +22,13 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen>
     with SingleTickerProviderStateMixin {
   static TextEditingController _controller = TextEditingController();
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    GoogleSignInApi.googleSignIn.signInSilently();
+  }
+
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();

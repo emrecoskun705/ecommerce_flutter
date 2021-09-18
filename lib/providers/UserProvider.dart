@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'package:ecommerce_flutter/services/google_signin_api.dart';
 import 'package:ecommerce_flutter/services/logout_api.dart';
 import 'package:ecommerce_flutter/services/register_api.dart';
 import 'package:flutter/foundation.dart';
@@ -10,6 +11,7 @@ class UserProvider with ChangeNotifier {
   bool _loading = false;
   bool _error = false;
   bool _isLoggedIn = false;
+  bool _isGoogleUserLoggedIn = false;
 
   //This method is used for authenticate(login) user
   //TODO: add other statusCodes like 400, 500(internal server error)
@@ -41,6 +43,24 @@ class UserProvider with ChangeNotifier {
     setError(success);
 
     return success;
+  }
+
+  Future fetchGoogleUser() async {
+    setLoading(true);
+    var accessToken = await GoogleSignInApi.handleSignIn();
+    if (accessToken != null) {
+      var token = await GoogleSignInApi.getToken(accessToken);
+      if (token != null) {
+        await UserTokenSecureStorage.setToken(token);
+        setIsLoggedIn(true);
+        setIsGoogleUserLoggedIn(true);
+        setLoading(false);
+        return true;
+      }
+    }
+
+    setLoading(false);
+    return false;
   }
 
   Future registerUser(String email, String password1, String password2) async {
@@ -81,17 +101,17 @@ class UserProvider with ChangeNotifier {
     if (_isLoggedIn) {
       setLoading(true);
       String? token = await UserTokenSecureStorage.getToken();
-      var success =
-          await LogoutApi(token: token).fetchData().then((response) async {
+      if (_isGoogleUserLoggedIn) {
+        await GoogleSignInApi.handleSignOut();
+        setIsGoogleUserLoggedIn(false);
+      }
+
+      await LogoutApi(token: token).fetchData().then((response) async {
         if (response.statusCode == 200) {}
       });
-
       await UserTokenSecureStorage.deleteToken();
       setIsLoggedIn(false);
       setLoading(false);
-      return success;
-    } else {
-      return false;
     }
   }
 
@@ -106,6 +126,11 @@ class UserProvider with ChangeNotifier {
 
   void setIsLoggedIn(bool value) {
     _isLoggedIn = value;
+    notifyListeners();
+  }
+
+  void setIsGoogleUserLoggedIn(bool value) {
+    _isGoogleUserLoggedIn = value;
     notifyListeners();
   }
 

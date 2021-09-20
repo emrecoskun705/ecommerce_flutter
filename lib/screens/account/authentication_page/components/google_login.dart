@@ -1,11 +1,8 @@
 import 'package:ecommerce_flutter/providers/UserProvider.dart';
 import 'package:ecommerce_flutter/providers/persistent_tab_provider.dart';
-import 'package:ecommerce_flutter/services/google_signin_api.dart';
+import 'package:ecommerce_flutter/size_config.dart';
 import 'package:flutter/material.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:google_sign_in/google_sign_in.dart';
-import 'package:http/http.dart' as http;
-import 'dart:convert' show json;
+import 'package:flutter_svg/flutter_svg.dart';
 
 import 'package:provider/provider.dart';
 
@@ -28,9 +25,13 @@ class _GoogleLoginState extends State<GoogleLogin> {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        IconButton(
-          onPressed: _login,
-          icon: Icon(FontAwesomeIcons.google),
+        GestureDetector(
+          onTap: _login,
+          child: SvgPicture.asset(
+            'assets/svg/google.svg',
+            semanticsLabel: 'Google Sign In',
+            height: getProportionateScreenHeight(50),
+          ),
         ),
       ],
     );

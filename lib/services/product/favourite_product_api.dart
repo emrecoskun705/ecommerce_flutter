@@ -51,12 +51,14 @@ class FavouriteProductApi {
 
   Future<bool> fetchFavouriteProduct(int productId) async {
     var token = await UserTokenSecureStorage.getToken();
-    var url = Uri.parse('$kServerApiURL/favourite-product-list/');
-    url = url.replace(queryParameters: {'productId': productId.toString()});
+    var url = Uri.parse(
+        '$kServerApiURL/favourite-product-list/${productId.toString()}/');
+
     http.Response response = await http.get(url, headers: {
       HttpHeaders.authorizationHeader: 'Token ${token.toString()}'
     });
     if (response.statusCode == 200) {
+      print(response);
       return true;
     } else {
       return false;

@@ -31,6 +31,7 @@ class ProductDetailApi {
       // fetch favourite product response. If it is true, product is favourite otherwise not
       dynamic responseFavouriteProduct =
           await FavouriteProductApi().fetchFavouriteProduct(productId);
+      print(responseFavouriteProduct);
       late bool isFavourite;
       if (responseFavouriteProduct) {
         isFavourite = true;

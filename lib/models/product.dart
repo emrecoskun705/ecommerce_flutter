@@ -6,7 +6,7 @@ class Product {
   double price;
   double discountPrice; // if it is -1.0 there is no discount
   int stock;
-  bool isFavourite = false;
+  bool isFavourite;
 
   Product(
       {required this.id,

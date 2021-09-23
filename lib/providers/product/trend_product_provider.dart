@@ -14,8 +14,9 @@ class TrendProductProvider with ChangeNotifier {
     await TrendProductApi().fetchData().then((response) {
       if (response.statusCode == 200) {
         dynamic data = jsonDecode(response.body);
+        List<MinimalProduct> tempProductList = [];
         for (var product in data) {
-          addProduct(MinimalProduct(
+          tempProductList.add(MinimalProduct(
             id: product['id'],
             title: product['title'],
             image: product['image'],
@@ -25,13 +26,14 @@ class TrendProductProvider with ChangeNotifier {
                 : 0.0,
           ));
         }
+        setProductList(tempProductList);
       }
     });
     setLoading(false);
   }
 
-  void addProduct(MinimalProduct product) {
-    productList.add(product);
+  void setProductList(List<MinimalProduct> productList) {
+    this.productList = productList;
     notifyListeners();
   }
 

@@ -10,29 +10,25 @@ class HomeCarousel extends StatefulWidget {
 }
 
 class _HomeCarouselState extends State<HomeCarousel> {
-  CarouselProvider _carouselProvider = CarouselProvider();
-
   @override
   void initState() {
-    _carouselProvider.fetchImageURLs();
     super.initState();
+    WidgetsBinding.instance!.addPostFrameCallback((timeStamp) {
+      Provider.of<CarouselProvider>(context, listen: false).fetchImageURLs();
+    });
   }
 
   @override
   Widget build(BuildContext context) {
-    return ChangeNotifierProvider.value(
-      value: _carouselProvider,
-      child: Consumer<CarouselProvider>(builder: (context, data, _) {
-        if (data.isLoading) {
-          return Padding(
+    return Provider.of<CarouselProvider>(context).isLoading
+        ? Padding(
             padding: EdgeInsets.all(8.0),
             child: Center(
               child: CircularProgressIndicator(),
             ),
-          );
-        } else {
-          return GFCarousel(
-            items: data.imageURLs.map(
+          )
+        : GFCarousel(
+            items: context.watch<CarouselProvider>().imageURLs.map(
               (url) {
                 return Container(
                   margin: EdgeInsets.all(8.0),
@@ -53,8 +49,5 @@ class _HomeCarouselState extends State<HomeCarousel> {
               });
             },
           );
-        }
-      }),
-    );
   }
 }

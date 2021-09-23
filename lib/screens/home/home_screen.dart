@@ -1,4 +1,6 @@
 import 'package:ecommerce_flutter/providers/UserProvider.dart';
+import 'package:ecommerce_flutter/providers/carousel_provider.dart';
+import 'package:ecommerce_flutter/providers/product/trend_product_provider.dart';
 import 'package:ecommerce_flutter/screens/components/search_bar.dart';
 import 'package:ecommerce_flutter/screens/home/components/home_carousel.dart';
 import 'package:ecommerce_flutter/screens/home/components/trend_products.dart';
@@ -20,6 +22,7 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen>
     with SingleTickerProviderStateMixin {
   static TextEditingController _controller = TextEditingController();
+  final GlobalKey<RefreshIndicatorState> _refreshIndicatorKey = GlobalKey();
 
   @override
   void didChangeDependencies() {
@@ -31,6 +34,13 @@ class _HomeScreenState extends State<HomeScreen>
   @override
   Widget build(BuildContext context) {
     var _spacer = SizedBox(height: getProportionateScreenHeight(20.0));
+
+    Future<Null> _refresh() async {
+      await Provider.of<CarouselProvider>(context, listen: false)
+          .fetchImageURLs();
+      await Provider.of<TrendProductProvider>(context, listen: false)
+          .fetchTrendProducts();
+    }
 
     return Scaffold(
       body: SafeArea(
@@ -75,13 +85,17 @@ class _HomeScreenState extends State<HomeScreen>
                 ),
               ),
               Flexible(
-                child: ListView(
-                  children: [
-                    _spacer,
-                    HomeCarousel(),
-                    _spacer,
-                    TrendProducts(),
-                  ],
+                child: RefreshIndicator(
+                  key: _refreshIndicatorKey,
+                  onRefresh: _refresh,
+                  child: ListView(
+                    children: [
+                      _spacer,
+                      HomeCarousel(),
+                      _spacer,
+                      TrendProducts(),
+                    ],
+                  ),
                 ),
               ),
             ],

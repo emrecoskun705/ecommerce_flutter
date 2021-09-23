@@ -1,3 +1,4 @@
+import 'package:ecommerce_flutter/providers/carousel_provider.dart';
 import 'package:ecommerce_flutter/providers/order_provider.dart';
 import 'package:ecommerce_flutter/providers/persistent_tab_provider.dart';
 import 'package:ecommerce_flutter/providers/product/trend_product_provider.dart';
@@ -15,7 +16,8 @@ void main() async {
         ChangeNotifierProvider(create: (_) => PersistentTabProvider()),
         ChangeNotifierProvider(create: (_) => TrendProductProvider()),
         ChangeNotifierProvider(create: (_) => OrderProvider()),
-        ChangeNotifierProvider(create: (_) => SearchHistoryProvider())
+        ChangeNotifierProvider(create: (_) => SearchHistoryProvider()),
+        ChangeNotifierProvider(create: (_) => CarouselProvider()),
       ],
       child: MyApp(),
     ),

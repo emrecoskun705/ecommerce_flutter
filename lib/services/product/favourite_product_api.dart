@@ -58,7 +58,6 @@ class FavouriteProductApi {
       HttpHeaders.authorizationHeader: 'Token ${token.toString()}'
     });
     if (response.statusCode == 200) {
-      print(response);
       return true;
     } else {
       return false;

@@ -6,11 +6,11 @@ class MinimalProduct {
   final double discountPrice; // if it is -1.0 there is no discount
   bool isFavourite = false;
 
-  MinimalProduct({
-    required this.id,
-    required this.title,
-    required this.image,
-    required this.price,
-    required this.discountPrice,
-  });
+  MinimalProduct(
+      {required this.id,
+      required this.title,
+      required this.image,
+      required this.price,
+      required this.discountPrice,
+      this.isFavourite = false});
 }

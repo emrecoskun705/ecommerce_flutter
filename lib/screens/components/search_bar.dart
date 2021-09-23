@@ -1,5 +1,7 @@
+import 'package:ecommerce_flutter/providers/search_history_provider.dart';
 import 'package:ecommerce_flutter/screens/search/components/product_list_result.dart';
 import 'package:ecommerce_flutter/size_config.dart';
+import 'package:provider/provider.dart';
 import 'package:flutter/material.dart';
 import 'package:persistent_bottom_nav_bar/persistent-tab-view.dart';
 
@@ -32,6 +34,8 @@ class _SearchBarState extends State<SearchBar> {
         maxLines: 1,
         textInputAction: TextInputAction.search,
         onSubmitted: (value) {
+          Provider.of<SearchHistoryProvider>(context, listen: false)
+              .addItem(value);
           pushNewScreen(context,
               screen: ProductListPage(
                 query: value,

@@ -1,3 +1,4 @@
+import 'package:ecommerce_flutter/providers/search_history_provider.dart';
 import 'package:ecommerce_flutter/screens/components/search_bar.dart';
 import 'package:ecommerce_flutter/screens/search/components/history_search_list.dart';
 import 'package:ecommerce_flutter/screens/search/components/small_title_widget.dart';
@@ -7,6 +8,7 @@ import 'package:flutter/material.dart';
 import 'package:ecommerce_flutter/constants.dart';
 
 import 'package:ecommerce_flutter/screens/search/components/popular_search_list.dart';
+import 'package:provider/provider.dart';
 
 class SearchScreen extends StatelessWidget {
   static TextEditingController _controller = TextEditingController();
@@ -35,7 +37,25 @@ class SearchScreen extends StatelessWidget {
             SmallTitle('Popular'),
             PopularSearchList(),
             _spacer,
-            SmallTitle('History'),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                SmallTitle('History'),
+                Padding(
+                  padding: EdgeInsets.only(right: 10),
+                  child: GestureDetector(
+                    onTap: () {
+                      Provider.of<SearchHistoryProvider>(context, listen: false)
+                          .clearHistory();
+                    },
+                    child: Text(
+                      'Clear History',
+                      style: TextStyle(color: Color(0xFFBBBBBB)),
+                    ),
+                  ),
+                ),
+              ],
+            ),
             HistorySearchList(),
           ],
         ),

@@ -40,7 +40,8 @@ dependencies:
   flutter_rating_bar: ^4.0.0
   webview_flutter: ^2.0.12
   font_awesome_flutter: ^9.1.0
-  google_sign_in: ^5.1.0
+  google_sign_in: 5.0.7
+  shared_preferences: ^2.0.7
 
 dev_dependencies:
   flutter_test:

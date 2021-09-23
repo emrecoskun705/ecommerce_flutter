@@ -2,7 +2,7 @@ import 'package:ecommerce_flutter/size_config.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-const kServerURL = 'http://192.168.0.108:8000';
+const kServerURL = 'https://www.emrecoskun.xyz';
 const kServerAuthApiURL = '$kServerURL/rest-auth';
 const kServerApiURL = '$kServerURL/api';
 

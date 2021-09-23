@@ -1,8 +1,12 @@
 import 'package:ecommerce_flutter/providers/product/search_product_provider.dart';
 import 'package:ecommerce_flutter/screens/components/product_card.dart';
+import 'package:ecommerce_flutter/screens/components/search_bar.dart';
 import 'package:ecommerce_flutter/size_config.dart';
 import 'package:flutter/material.dart';
+import 'package:persistent_bottom_nav_bar/persistent-tab-view.dart';
 import 'package:provider/provider.dart';
+import 'package:ecommerce_flutter/screens/search/search.dart';
+import 'package:ecommerce_flutter/constants.dart';
 
 class ProductListPage extends StatefulWidget {
   final String query;
@@ -14,6 +18,7 @@ class ProductListPage extends StatefulWidget {
 }
 
 class _ProductListPageState extends State<ProductListPage> {
+  static TextEditingController _controller = TextEditingController();
   SearchProductProvider searchProductProvider = SearchProductProvider();
   ScrollController _sc = ScrollController();
 
@@ -46,27 +51,61 @@ class _ProductListPageState extends State<ProductListPage> {
   }
 
   Widget _buildList(itemHeight, itemWidth) {
-    return ChangeNotifierProvider.value(
-      value: searchProductProvider,
-      child: Consumer<SearchProductProvider>(
-        builder: (context, data, index) => GridView.builder(
-            gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                crossAxisCount: 2,
-                childAspectRatio: (itemWidth / itemHeight),
-                // mainAxisExtent: 250,
-                mainAxisSpacing: getProportionateScreenHeight(5)),
-            controller: _sc,
-            // purpose of itemCount + 1 is progress indicator.
-            // progress indicator is always at the end but it only appears when isLoading=true
-            itemCount: data.productList.length + 1,
-            padding: EdgeInsets.symmetric(vertical: 8.0),
-            itemBuilder: (BuildContext context, int index) {
-              if (index == data.productList.length) {
-                return _buildProgressIndicator();
-              }
-              return ProductCard(product: data.productList[index]);
-            }),
-      ),
+    return Column(
+      children: [
+        Row(
+          children: [
+            IconButton(
+                onPressed: () {
+                  Navigator.pop(context);
+                },
+                icon: Icon(Icons.arrow_back)),
+            Flexible(
+              child: GestureDetector(
+                onTap: () {
+                  // showSearch(context: context, delegate: SearchScreen());
+                  pushNewScreen(context,
+                      screen: SearchScreen(),
+                      pageTransitionAnimation: PageTransitionAnimation.fade);
+                },
+                child: Padding(
+                  padding: EdgeInsets.symmetric(
+                      horizontal: getProportionateScreenWidth(20),
+                      vertical: getProportionateScreenHeight(10)),
+                  child: Hero(
+                      tag: kSearchBarCategoryTag,
+                      child:
+                          SearchBar(enabled: false, controller: _controller)),
+                ),
+              ),
+            ),
+          ],
+        ),
+        Flexible(
+          child: ChangeNotifierProvider.value(
+            value: searchProductProvider,
+            child: Consumer<SearchProductProvider>(
+              builder: (context, data, index) => GridView.builder(
+                  gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                      crossAxisCount: 2,
+                      childAspectRatio: (itemWidth / itemHeight),
+                      // mainAxisExtent: 250,
+                      mainAxisSpacing: getProportionateScreenHeight(5)),
+                  controller: _sc,
+                  // purpose of itemCount + 1 is progress indicator.
+                  // progress indicator is always at the end but it only appears when isLoading=true
+                  itemCount: data.productList.length + 1,
+                  padding: EdgeInsets.symmetric(vertical: 8.0),
+                  itemBuilder: (BuildContext context, int index) {
+                    if (index == data.productList.length) {
+                      return _buildProgressIndicator();
+                    }
+                    return ProductCard(product: data.productList[index]);
+                  }),
+            ),
+          ),
+        ),
+      ],
     );
   }
 

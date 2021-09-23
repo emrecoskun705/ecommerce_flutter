@@ -1,7 +1,9 @@
 import 'package:ecommerce_flutter/providers/search_history_provider.dart';
+import 'package:ecommerce_flutter/screens/search/components/product_list_result.dart';
 import 'package:ecommerce_flutter/size_config.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:persistent_bottom_nav_bar/persistent-tab-view.dart';
 import 'package:provider/provider.dart';
 
 class HistorySearchList extends StatefulWidget {
@@ -28,6 +30,8 @@ class _HistorySearchListState extends State<HistorySearchList> {
               itemCount:
                   context.watch<SearchHistoryProvider>().searchHistory.length,
               itemBuilder: (context, index) {
+                String text =
+                    context.watch<SearchHistoryProvider>().searchHistory[index];
                 return Padding(
                   padding: EdgeInsets.symmetric(
                       horizontal: getProportionateScreenWidth(20)),
@@ -44,11 +48,17 @@ class _HistorySearchListState extends State<HistorySearchList> {
                                 color: Colors.grey.withOpacity(0.4),
                               )),
                       ),
-                      child: ListTile(
-                        leading: Icon(Icons.search),
-                        title: Text(context
-                            .watch<SearchHistoryProvider>()
-                            .searchHistory[index]),
+                      child: GestureDetector(
+                        onTap: () {
+                          pushNewScreen(context,
+                              screen: ProductListPage(
+                                query: text,
+                              ));
+                        },
+                        child: ListTile(
+                          leading: Icon(Icons.search),
+                          title: Text(text),
+                        ),
                       ),
                     ),
                   ),
